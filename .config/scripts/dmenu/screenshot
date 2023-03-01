@@ -1,0 +1,11 @@
+#!/bin/bash
+
+declare -A options
+options[Full Screen]="maim -u ~/Pictures/Screenshots/\"$(date)\".png "
+options[Select]="maim -u -s -D ~/Pictures/Screenshots/\"$(date)\".png "
+
+
+choice=$(printf "Full Screen\nSelect" | dmenu -p "Select Option")
+
+
+[ -n "$choice" ] && "${options[$choice]}"
