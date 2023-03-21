@@ -5,9 +5,9 @@ shopt -s nullglob globstar
 SOURCE_DIR=$(cd -- "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 source "$SOURCE_DIR/opts"
 
-DMENU_WIDTH=200
+DMENU_WIDTH=600
 DMENU_X=$(get_mid_X "$DMENU_WIDTH")
-DMENU_Y=$(( $(get_mid_Y) - 100))
+DMENU_Y=$(( $(get_mid_Y) - 300))
 DMENU_PROMPT="passname:"
 DMENU="dmenu -p $DMENU_PROMPT -l $VERTICAL_ITEM_COUNT -x $DMENU_X -y $DMENU_Y -z $DMENU_WIDTH"
 

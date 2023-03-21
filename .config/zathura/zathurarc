@@ -2,8 +2,8 @@ set selection-clipboard clipboard
 set window-title-basename true
 
 ### Recolor mode settings ###
-set recolor-lightcolor          "#282c34" # Background
-set recolor-darkcolor           "#9ca0a4" # Foreground
+set recolor-lightcolor          "#1a1c26" # Background
+set recolor-darkcolor           "#9ba7c4" # Foreground
 
 ### Zoom settings ###
 set zoom-step 5
@@ -14,23 +14,24 @@ set adjust-open width
 set first-page-column 1
 
 ### Keybindings ###
+unmap [normal] <A-r>
+map <A-r> feedkeys ":exec zath $FILE<Return>q<Return>"
+
 map D set "first-page-column 1:1"
 map <C-d> set "first-page-column 1:2"
 map <A-Space> zoom best-fit
-map <C-z> feedkeys ":exec zath $FILE<Return>quit<Return>"
 
 # nord        
-map ! feedkeys ":set recolor-lightcolor \#282c34<Return>\:set recolor-darkcolor \#9ca0a4<Return>"
-
+map ! feedkeys ":set recolor-lightcolor \#1a1c26 <Return>:<Esc>:set recolor-darkcolor \#9ba7c4 <Return>"
 # dark   
-map @ feedkeys ":set recolor-lightcolor \#21222<Return>\:set recolor-darkcolor \#f8f8f2<Return>"
+map @ feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#4778A0 <Return>"
 
 # bluish midnight
-map \# feedkeys ":set recolor-lightcolor \#002b36<Return>\:set recolor-darkcolor \#839496<Return>" 
+map \# feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#839496 <Return>" 
 
 # sepia    
-map $ feedkeys ":set recolor-lightcolor \#dcc1a7<Return>\:set recolor-darkcolor \#000000<Return>"  
+map $ feedkeys ":set recolor-lightcolor \#222222 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"  
 
 # original   
-map % feedkeys ":set recolor-lightcolor \#ffffff<Return>\:set recolor-darkcolor \#000000<Return>"  
+map % feedkeys ":set recolor-lightcolor \#1a1c26 <Return>:<Esc>:set recolor-darkcolor \#9ba7c4 <Return>"
 

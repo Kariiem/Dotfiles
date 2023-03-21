@@ -1,12 +1,16 @@
 #!/bin/sh
 
-DMENU_WIDTH=300
-LAPTOP_SCREEN_WIDTH=${LAPTOP_SCREEN_WIDTH:-$(( $DMENU_WIDTH/2))}
-LAPTOP_SCREEN_HEIGHT=${LAPTOP_SCREEN_HEIGHT:- 0}
-DMENU_X=$(( $LAPTOP_SCREEN_WIDTH - $(($DMENU_WIDTH/2))))
-DMENU_Y=$(( $LAPTOP_SCREEN_HEIGHT/2 ))
-[ $DMENU_X -eq 0 ] && DMENU_X=810
-[ $DMENU_Y -eq 0 ] && DMENU_Y=320
+
+SOURCE_DIR=$(cd -- "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+source "$SOURCE_DIR/opts"
+
+DMENU_WIDTH=600
+DMENU_X=$(get_mid_X "$DMENU_WIDTH")
+DMENU_Y=$(( $(get_mid_Y) - 300))
+DMENU_PROMPT="run:"
+
+DMENU="dmenu -p $DMENU_PROMPT -l $VERTICAL_ITEM_COUNT -x $DMENU_X -y $DMENU_Y -z $DMENU_WIDTH"
+# dmenu -l 25 -x "$DMENU_X" -y "$DMENU_Y" -z "$DMENU_WIDTH" -p "run" "$@" \
 
 cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
 if [ -d "$cachedir" ]; then
@@ -31,7 +35,7 @@ awk -v histfile=$historyfile '
 			x[$0]=1
 		}
 	} !x[$0]++ ' "$cache" \
-	| dmenu -l 25 -x "$DMENU_X" -y "$DMENU_Y" -z "$DMENU_WIDTH" -p "run" "$@" \
+    | $DMENU \
 	| awk -v histfile=$historyfile '
 		BEGIN {
 			FS=OFS="\t"

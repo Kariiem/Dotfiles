@@ -17,7 +17,6 @@
 ;;   presentations or streaming.
 ;; - `doom-unicode-font' -- for unicode glyphs
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
@@ -74,13 +73,62 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;;; global
+(+global-word-wrap-mode)
+;;; evil
+(setq evil-cross-lines t)
+
+;;; Projectile
+(setq projectile-project-search-path '("~/FECU" "~/Workspaces" "~/repos" "~/.config"))
+
+;;; treemacs
+(setq treemacs-indent-guide-style 'line
+      treemacs-show-hidden-files nil)
+(require 'treemacs)
+(treemacs-load-theme "doom-colors")
+(with-eval-after-load 'doom-themes
+  (doom-themes-treemacs-config))
+
+;;; erc
+(setq erc-prompt (lambda () (concat "[" (buffer-name) "]"))
+      erc-server "irc.libera.chat"
+      erc-autojoin-channels-alist '(("irc.libera.chat" "#haskell-in-depth" )
+                                    ("irc.oftc.net" "#qemu-gsoc"))
+      erc-nick "Kimo"
+      erc-user-full-name "Karim Taha"
+      erc-auto-query 'bury
+      erc-kill-buffer-on-part t
+      erc-fill-column 100
+      erc-fill-function 'erc-fill-static
+      erc-fill-static-center 20
+      erc-log-channels-directory "~/.erc/logs/"
+      erc-save-buffer-on-part t
+      )
+
+;;;;;;; lang ;;;;;;;;
+;;; haskell
 (setq haskell-stylish-on-save t)
 
 (add-hook 'org-mode-hook
           (lambda ()
             (add-hook 'after-save-hook 'org-babel-tangle )
             ))
+
+;;; org
 (add-hook! org-mode 'rainbow-mode)
 (add-hook! prog-mode 'rainbow-mode)
 
-(setq evil-cross-lines t)
+
+(add-hook! 'org-after-todo-statistics-hook #'org-summary-todo)
+
+;;; ess
+(after! lsp-ui
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-show-with-cursor nil)
+  (setq lsp-ui-doc-delay 2)
+  (setq lsp-eldoc-enable-hover t))
+(defun my-inferior-ess-init ()
+      (setq-local ansi-color-for-comint-mode 'filter)
+      (smartparens-mode 1))
+    (add-hook 'inferior-ess-mode-hook 'my-inferior-ess-init)
