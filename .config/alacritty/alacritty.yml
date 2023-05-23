@@ -23,7 +23,7 @@
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
 
-#window:
+window:
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. Both lines and columns
@@ -68,7 +68,7 @@
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  #opacity: 1.0
+  opacity: 0.8
 
   # Startup Mode (changes require restart)
   #
@@ -115,16 +115,18 @@ font:
   normal:
     # Default:
     #   - (Linux/BSD) monospace
-    family: "Hack"
+    family: "JetBrains Mono"
     style: Regular
   bold:
-    family: "Hack"
+    family: "JetBrains Mono" # "Hack"
     style: Bold
   italic:
-    family: "Hack"
+    family: "JetBrains Mono"
+      #"Hack"
     style: Italic
   bold_italic:
-    family: "Hack"
+    family: "JetBrains Mono"
+      #"Hack"
     style: Bold Italic
 
   # Point size
