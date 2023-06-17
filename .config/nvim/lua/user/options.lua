@@ -3,12 +3,12 @@ local options = {
     clipboard = "unnamedplus",
     number = true,
     relativenumber = true,
-    cursorline = false,
+    cursorline = true,
     termguicolors = true,
-    tabstop = 4,
+    tabstop = 2,
     softtabstop = 0,
+    shiftwidth = 2,
     expandtab = true,
-    shiftwidth = 4,
     smartindent = true,
     guifont = "ubuntu mono",
     showmode = true,
@@ -19,6 +19,8 @@ local options = {
     laststatus = 3,
     hlsearch = false,
     incsearch = true,
+    wrap = true,
+    linebreak = true,
 }
 
 

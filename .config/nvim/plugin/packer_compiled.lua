@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/karim/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["bookmarks.nvim"] = {
+    loaded = true,
+    path = "/home/karim/.local/share/nvim/site/pack/packer/start/bookmarks.nvim",
+    url = "https://github.com/tomasky/bookmarks.nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/karim/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -119,15 +124,15 @@ _G.packer_plugins = {
     path = "/home/karim/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
+  ["gruber-darker.nvim"] = {
+    loaded = true,
+    path = "/home/karim/.local/share/nvim/site/pack/packer/start/gruber-darker.nvim",
+    url = "https://github.com/blazkowolf/gruber-darker.nvim"
+  },
   ["haskell-tools.nvim"] = {
     loaded = true,
     path = "/home/karim/.local/share/nvim/site/pack/packer/start/haskell-tools.nvim",
     url = "https://github.com/mrcjkb/haskell-tools.nvim"
-  },
-  ["iron.nvim"] = {
-    loaded = true,
-    path = "/home/karim/.local/share/nvim/site/pack/packer/start/iron.nvim",
-    url = "https://github.com/hkupty/iron.nvim"
   },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
@@ -138,15 +143,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/karim/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
-  },
-  neorg = {
-    config = { "\27LJ\2\nﬁ\1\0\0\a\0\14\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\f\0005\3\3\0004\4\0\0=\4\4\0034\4\0\0=\4\5\0035\4\t\0005\5\a\0005\6\6\0=\6\b\5=\5\n\4=\4\v\3=\3\r\2B\0\2\1K\0\1\0\tload\1\0\0\21core.norg.dirman\vconfig\1\0\0\15workspaces\1\0\0\1\0\2\nnotes\f~/notes\vAgenda\r~/Agenda\24core.norg.concealer\18core.defaults\1\0\0\nsetup\nneorg\frequire\0" },
-    load_after = {},
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/karim/.local/share/nvim/site/pack/packer/opt/neorg",
-    url = "https://github.com/nvim-neorg/neorg"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -226,23 +222,6 @@ time([[Defining packer_plugins]], false)
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\n®\1\0\0\4\0\t\0\0176\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0)\1,\1=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0005\2\a\0005\3\6\0=\3\b\2B\0\2\1K\0\1\0\19popup_mappings\1\0\0\1\0\2\16scroll_down\n<a-j>\14scroll_up\n<a-k>\nsetup\14which-key\frequire\ftimeout\6o\bvim\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
--- Load plugins in order defined by `after`
-time([[Sequenced loading]], true)
-vim.cmd [[ packadd telescope.nvim ]]
-vim.cmd [[ packadd nvim-treesitter ]]
-time([[Sequenced loading]], false)
-vim.cmd [[augroup packer_load_aucmds]]
-vim.cmd [[au!]]
-  -- Filetype lazy-loads
-time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType norg ++once lua require("packer.load")({'neorg'}, { ft = "norg" }, _G.packer_plugins)]]
-time([[Defining lazy-load filetype autocommands]], false)
-vim.cmd("augroup END")
-vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/karim/.local/share/nvim/site/pack/packer/opt/neorg/ftdetect/norg.vim]], true)
-vim.cmd [[source /home/karim/.local/share/nvim/site/pack/packer/opt/neorg/ftdetect/norg.vim]]
-time([[Sourcing ftdetect script at: /home/karim/.local/share/nvim/site/pack/packer/opt/neorg/ftdetect/norg.vim]], false)
-vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

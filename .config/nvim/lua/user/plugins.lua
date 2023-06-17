@@ -45,7 +45,7 @@ return packer.startup(function(use)
     -- colorthemes
     use "folke/tokyonight.nvim"
     use 'Mofiqul/dracula.nvim'
-
+    use "blazkowolf/gruber-darker.nvim"
     -- completion plugins
     use {
         "hrsh7th/nvim-cmp", -- completion plugin
@@ -91,30 +91,6 @@ return packer.startup(function(use)
     }
     -- haskell tooling
     use "mrcjkb/haskell-tools.nvim"
-    -- Neorg
-    use {
-        "nvim-neorg/neorg",
-        -- tag = "*",
-        run = ":Neorg sync-parsers",
-        ft = "norg",
-        after = { "nvim-treesitter", "telescope.nvim" }, -- You may want to specify Telescope here as well
-        config = function()
-            require('neorg').setup {
-                load = {
-                    ["core.defaults"] = {}, -- Loads default behaviour
-                    ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
-                    ["core.norg.dirman"] = { -- Manages Neorg workspaces
-                        config = {
-                            workspaces = {
-                                notes = "~/notes",
-                                Agenda = "~/Agenda",
-                            },
-                        },
-                    },
-                },
-            }
-        end
-    }
     -- Tree-sitter
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -127,9 +103,14 @@ return packer.startup(function(use)
     }
     use { "nvim-treesitter/playground" }
     -- Terminal/repl
-    use { "hkupty/iron.nvim" }
-    use { "akinsho/toggleterm.nvim"} 
-
+    -- use { "hkupty/iron.nvim" }
+    use { "akinsho/toggleterm.nvim" }
+    use { "tomasky/bookmarks.nvim" }
+    use {
+        'crusj/bookmarks.nvim',
+        branch = 'main',
+        requires = { 'kyazdani42/nvim-web-devicons' }
+    }
     if PACKER_BOOTSTRAP then
         require("packer").sync()
     end
