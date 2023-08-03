@@ -9,6 +9,7 @@
               '(face empty spaces tabs newline trailing space-mark tab-mark))
 (global-whitespace-mode t)
 (global-display-line-numbers-mode 1)
+(require-package 'gruber-darker-theme)
 (load-theme 'gruber-darker t)
 
 (setq-default indent-tabs-mode nil)
