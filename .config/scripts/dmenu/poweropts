@@ -1,8 +1,9 @@
 #!/bin/bash
 
-choice=$(printf 'cancel\nlogout\nhibernate\nsuspend\npoweroff\nreboot'|dmenu -i -p "Choose Option")
+choice=$(printf 'cancel\nlock\nlogout\nhibernate\nsuspend\npoweroff\nreboot'|dmenu -i -p "Choose Option")
 [ $choice = "cancel"    ] ;
-[ $choice = "logout"    ] && killall -u $(whoami) #xdotool key super+shift+q
+[ $choice = "lock"      ] && dm-tool lock
+[ $choice = "logout"    ] && xdotool key super+shift+q && killall -u $(whoami) 
 [ $choice = "poweroff"  ] && { poweroff; }
 [ $choice = "reboot"    ] && { reboot; }
 [ $choice = "hibernate" ] && systemctl hibernate

@@ -1,11 +1,41 @@
 #!/bin/bash
 
-declare -A options
-options[Full Screen]="maim -u ~/Pictures/Screenshots/\"$(date)\".png "
-options[Select]="maim -u -s -D ~/Pictures/Screenshots/\"$(date)\".png "
+get_timestamp() {
+  date 
+}
 
+cp2cb() {
+    xclip -selection clipboard -t image/png
+}
+maim_dir="$HOME/Pictures/Screenshots"
 
-choice=$(printf "Full Screen\nSelect" | dmenu -p "Select Option")
+declare -a modes=(
+"Fullscreen"
+"Select Region"
+"Active Window"
+)
 
+choice=$(printf '%s\n' "${modes[@]}" | dmenu -p "Select Option") || exit 1
+case "$choice" in
+    'Fullscreen') 
+        maim_opts="-u" ;;
+    'Select Region')
+        maim_opts="-u -s -D -o" ;;
+    'Active Window')
+        maim_opts="-u -i $(xdotool getactivewindow)" ;;
+    *) exit 1 ;;
+esac
 
-[ -n "$choice" ] && "${options[$choice]}"
+local target=( "Save" "Clip" "Both" )
+
+choice=$(printf '%s\n' "${target[@]}" | dmenu -p "Select Option") || exit 1
+case "$choice" in
+    'Save') 
+        maim ${maim_opts} "${maim_dir}/$(get_timestamp).png" ;;
+    'Clip')
+        maim ${maim_opts} | xclip -selection clipboard -t image/png ;; 
+    'Both')
+        maim ${maim_opts} | tee "${maim_dir}/$(get_timestamp).png" | xclip -selection clipboard -t image/png  ;;
+    *) exit 1 ;;
+esac
+

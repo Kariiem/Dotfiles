@@ -76,6 +76,9 @@
 
 ;;; global
 (+global-word-wrap-mode)
+(setq doom-font
+      (font-spec :family "JetBrains Mono" :size 14 :weight 'normal :slant 'italic))
+
 ;;; evil
 (setq evil-cross-lines t)
 

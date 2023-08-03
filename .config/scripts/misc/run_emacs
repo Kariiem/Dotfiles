@@ -15,16 +15,15 @@ run_emacs() {
 
   if ! emacsclient -s ${server_name} -a 'false' -e 'nil'
   then
-    emacs --with-profile=${profile} --daemon 
+    emacs --with-profile=${profile} --daemon &
     echo ">> Server should have started. Trying to connect..."
   fi
   
-  emacsclient -s ${server_name} ${args}
+  emacsclient -c -s ${server_name} ${args}
 }
 doom() {
-	run_emacs "doom" "doom-emacs" -a 'false' -c
+	run_emacs "doom" "doom" -a 'false'
 }
 vanilla() {
-	run_emacs "vanilla" "vanilla-emacs" -a 'false' -c
+	run_emacs "vanilla" "vanilla" -a 'false'
 }
-#run_emacs "$@"
