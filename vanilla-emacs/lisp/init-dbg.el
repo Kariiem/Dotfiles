@@ -1,2 +1,2 @@
 (require-package 'realgud)
-(provide 'init-gdb)
+(provide 'init-dbg)

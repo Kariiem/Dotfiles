@@ -14,6 +14,10 @@
                              (dired-hide-details-mode 1)
                              (dired-omit-mode 1)
                              (visual-line-mode 1)))
+
 (setq dired-kill-when-opening-new-dired-buffer t)
+
+
+
 
 (provide 'init-dired)

@@ -30,23 +30,32 @@
 
 ;; Bootstrap config
 (setq custom-file (locate-user-emacs-file "custom.el"))
+
+;;;; Base
 (require 'init-package)
-;;(require 'init-evil)
-(require 'init-gdb)
-(require 'init-keychords)
-(require 'init-edit)
 (require 'init-display)
+(require 'init-minibuffer)
+(require 'init-edit)
+(require 'init-dired)
 (require 'init-completions)
 (require 'init-misc)
-(require 'init-minibuffer)
-(require 'init-coq)
+;;(require 'init-evil)
+(require 'init-keychords)
+
+
+;;;; Tools
 (require 'init-magit)
+(require 'init-rg)
+(require 'init-dbg)
+
+
+;;;; Languages
+(require 'init-org)
 (require 'init-c)
-;; (require 'init-scheme)
+(require 'init-coq)
+(require 'init-scheme)
 (require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
-(require 'init-rg)
-(require 'init-org)
-(require 'init-dired)
+
 ;; init.el ends here
