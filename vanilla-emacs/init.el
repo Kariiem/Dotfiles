@@ -46,5 +46,7 @@
 (require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
+(require 'init-rg)
 (require 'init-org)
+(require 'init-dired)
 ;; init.el ends here
