@@ -1,7 +1,7 @@
 (defun position-link ()
   (interactive)
   (kill-new
-   (format "[[%s:%d][%s]]"
+   (format "[[%s::%d][%s]]"
            (buffer-file-name)
            (save-restriction (widen) (line-number-at-pos))
            (symbol-at-point))))
