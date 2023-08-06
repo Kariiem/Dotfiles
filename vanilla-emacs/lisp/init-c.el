@@ -1,8 +1,7 @@
-(add-hook 'c-mode-hook (lambda () (c-set-style "linux")))
-(setq-default c-indentation-style "linux"
-              c-syntactic-indentation t
+(setq-default c-syntactic-indentation t
               c-basic-offset 4)
-(defun set-c-offsets ()
-  (c-set-offset 'defun-block-intro ?*))
-(add-hook 'c-mode-hook 'set-c-offsets)
+(defun set-c-styles ()
+  (c-set-style "k&r"))
+
+(add-hook 'c-mode-hook 'set-c-styles)
 (provide 'init-c)
