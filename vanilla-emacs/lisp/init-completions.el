@@ -28,15 +28,19 @@
 ;; (setq enable-recursive-minibuffers nil)
 ;; (setq completion-styles '(basic partial-completion emacs22))
 (setq completion-auto-help nil)
+
 (require-package 'company)
 (with-eval-after-load 'company
   (define-key company-active-map  (kbd "<tab>") #'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1))))
 
-(setq company-selection-wrap-around t)
-(setq company-dabbrev-downcase 0)
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 3)
+(setq company-selection-wrap-around t
+      company-dabbrev-downcase 0
+      company-idle-delay 0
+      company-minimum-prefix-length 3)
+
+(custom-set-faces '(icomplete-selected-match ((t (:foreground "#ffff00" :background "#52494e")))))
+
 (add-hook 'after-init-hook 'global-company-mode)
 (savehist-mode 1)
 
