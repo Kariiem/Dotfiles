@@ -2,7 +2,7 @@
 (require-package 'modus-themes)
 
 (load-theme 'gruber-darker t)
-(custom-set-faces'(widget-field ((t (:inherit default :width normal :background "gray")))))
+(custom-set-faces'(widget-field ((t (:extend nil :background "gray")))))
 
 (defun set-notmuch-faces ()
   (face-remap-add-relative 'notmuch-tag-face :foreground "blue")
