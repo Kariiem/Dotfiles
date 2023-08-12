@@ -33,6 +33,7 @@
 
 ;;;; Base
 (require 'init-package)
+(require 'init-theme)
 (require 'init-display)
 (require 'init-minibuffer)
 (require 'init-edit)
@@ -47,15 +48,16 @@
 (require 'init-magit)
 (require 'init-rg)
 (require 'init-dbg)
-
+(require 'init-email)
 
 ;;;; Languages
 (require 'init-org)
+(require 'init-md)
 (require 'init-c)
 (require 'init-coq)
+(require 'init-gl)
 (require 'init-scheme)
 (require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
-
 ;; init.el ends here

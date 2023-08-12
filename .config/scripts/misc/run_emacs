@@ -15,7 +15,7 @@ run_emacs() {
 
   if ! emacsclient -s ${server_name} -a 'false' -e 'nil'
   then
-    emacs --with-profile=${profile} --daemon &
+    emacs --with-profile=${profile} --daemon
     echo ">> Server should have started. Trying to connect..."
   fi
   

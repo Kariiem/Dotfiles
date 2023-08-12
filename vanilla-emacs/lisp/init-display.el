@@ -9,8 +9,6 @@
               '(face empty spaces tabs newline trailing space-mark tab-mark))
 (global-whitespace-mode t)
 (global-display-line-numbers-mode 1)
-(require-package 'gruber-darker-theme)
-(load-theme 'gruber-darker t)
 
 (setq-default indent-tabs-mode nil)
 (setq my-font
@@ -45,4 +43,6 @@
     (set-window-dedicated-p (selected-window) nil)
     (message "window un-dedicated")))
 (global-set-key (kbd "C-x 9") 'toggle-dedicate-window)
+
+
 (provide 'init-display)

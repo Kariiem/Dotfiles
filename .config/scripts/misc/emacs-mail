@@ -1,0 +1,3 @@
+#!/bin/bash
+
+emacs --eval "(progn (load-theme 'modus-operandi-deuteranopia t) (notmuch))"
