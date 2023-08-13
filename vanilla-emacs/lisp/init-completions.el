@@ -2,7 +2,13 @@
 ;;(require-package 'vertico)
 (require-package 'yasnippet)
 (require-package 'yasnippet-snippets)
+
 (yas-global-mode 1)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "M-SPC") 'yas-maybe-expand)
+(define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand)
+
 ;;(vertico-mode 1)
 ;; (ivy-mode 1)
 ;; (setq ivy-use-virtual-buffers t
@@ -17,9 +23,9 @@
 
 
 (fido-vertical-mode 1)
-(setq my-icomplete-keymaps '(("<tab>" . icomplete-force-complete)
-                             ("C-j"   . icomplete-forward-completions)
-                             ("C-k"   . icomplete-backward-completions)))
+;; (setq my-icomplete-keymaps '(("<tab>" . icomplete-force-complete)
+;;                              ("C-j"   . icomplete-forward-completions)
+;;                              ("C-k"   . icomplete-backward-completions)))
 (define-key icomplete-vertical-mode-minibuffer-map (kbd "<tab>") 'icomplete-force-complete)
 ;;(dolist (kv my-icomplete-keymaps)
 ;;  (define-key icomplete-vertical-mode-minibuffer-map (kbd (car kv)) (cdr kv)))
@@ -30,9 +36,9 @@
 (setq completion-auto-help nil)
 
 (require-package 'company)
-(with-eval-after-load 'company
-  (define-key company-active-map  (kbd "<tab>") #'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1))))
+;; (with-eval-after-load 'company
+;;   (define-key company-active-map  (kbd "<tab>") #'company-complete-common-or-cycle)
+;;   (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1))))
 
 (setq company-selection-wrap-around t
       company-dabbrev-downcase 0
