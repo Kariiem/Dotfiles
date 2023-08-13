@@ -1,5 +1,6 @@
 (require-package 'magit)
 
+(setq magit-define-global-key-bindings 'recommended)
 (with-eval-after-load 'magit
     (transient-define-argument magit-commit:--reedit-message ()
       :description "Reedit commit message"
