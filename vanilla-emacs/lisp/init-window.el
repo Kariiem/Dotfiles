@@ -4,16 +4,19 @@
 
 (defvar-keymap window-ctrl-map
   :prefix 'window-ctrl
-  "c" (repeat-command! delete-window)
-  "v" 'split-window-right
-  "s" 'split-window-below
-  "<up>" (repeat-command! enlarge-window-vertically)
-  "<down>" (repeat-command! shrink-window-vertically)
-  "<right>" (repeat-command! enlarge-window-horizontally)
-  "<left>" (repeat-command! shrink-window-horizontally))
+  "c"       'delete-window
+  "v"       'split-window-right
+  "s"       'split-window-below
+  "<up>"    'enlarge-window-vertically
+  "<down>"  'shrink-window-vertically
+  "<right>" 'enlarge-window-horizontally
+  "<left>"  'shrink-window-horizontally)
 
-;;(put 'enlarge-window-vertically  'repeat-map 'window-ctrl-map)
-;;(put 'shrink-window-vertically 'repeat-map 'window-ctrl-map)
+(put 'enlarge-window-vertically  'repeat-map 'window-ctrl-map)
+(put 'shrink-window-vertically 'repeat-map 'window-ctrl-map)
+(put 'enlarge-window-horizontally 'repeat-map 'window-ctrl-map)
+(put 'shrink-window-horizontally 'repeat-map 'window-ctrl-map)
+(put 'delete-window 'repeat-map 'window-ctrl-map)
 
 (global-set-key (kbd "C-c w") window-ctrl)
 (provide 'init-window)
