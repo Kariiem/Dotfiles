@@ -33,13 +33,14 @@
 
 ;;;; Base
 (require 'init-package)
+(require 'init-misc)
 (require 'init-theme)
+(require 'init-window)
 (require 'init-display)
 (require 'init-minibuffer)
 (require 'init-edit)
 (require 'init-dired)
 (require 'init-completions)
-(require 'init-misc)
 ;;(require 'init-evil)
 (require 'init-keychords)
 
