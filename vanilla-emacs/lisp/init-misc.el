@@ -16,4 +16,7 @@
 (global-set-key [remap kill-buffer] 'kill-current-buffer)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(setq Man-notify-method 'pushy
+      Man-width 80)
+
 (provide 'init-misc)
