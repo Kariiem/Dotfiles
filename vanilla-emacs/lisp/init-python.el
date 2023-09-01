@@ -1,4 +1,3 @@
 (require-package 'elpy)
-(elpy-enable)
-
+(advice-add 'python-mode :before 'elpy-enable)
 (provide 'init-python)

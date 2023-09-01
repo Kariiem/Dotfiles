@@ -16,9 +16,6 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;;(require 'init-benchmarking) ;; Measure startup time
 
-(defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
-
-
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
@@ -27,7 +24,6 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-
 ;; Bootstrap config
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
@@ -44,13 +40,12 @@
 ;;(require 'init-evil)
 (require 'init-keychords)
 
-
 ;;;; Tools
 (require 'init-magit)
 (require 'init-rg)
 (require 'init-dbg)
 (require 'init-email)
-
+
 ;;;; Languages
 (require 'init-org)
 (require 'init-md)
@@ -61,4 +56,5 @@
 (require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
+
 ;; init.el ends here
