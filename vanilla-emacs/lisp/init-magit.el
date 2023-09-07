@@ -18,4 +18,5 @@
                                     "ORIG_HEAD"))))
 
   (transient-append-suffix 'magit-commit "-C" '(magit-commit:--reedit-message)))
+
 (provide 'init-magit)

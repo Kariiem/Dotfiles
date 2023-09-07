@@ -42,6 +42,7 @@
 
 ;;;; Tools
 (require 'init-magit)
+(require 'init-tramp)
 (require 'init-rg)
 (require 'init-dbg)
 (require 'init-email)

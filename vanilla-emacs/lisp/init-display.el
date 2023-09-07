@@ -5,6 +5,8 @@
 (scroll-bar-mode -1)
 (show-paren-mode 1)
 (column-number-mode 1)
+;; use one-based column counting
+(setq mode-line-position-column-line-format '(" (%l,%C)"))
 (setq-default whitespace-style
               '(face empty spaces tabs newline trailing space-mark tab-mark))
 (global-whitespace-mode t)
