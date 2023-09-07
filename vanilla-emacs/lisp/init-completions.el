@@ -18,6 +18,8 @@
   (keymap-set vertico-map "RET" #'vertico-directory-enter)
   (keymap-set vertico-map "DEL" #'vertico-directory-delete-char)
   (keymap-set vertico-map "M-DEL" #'vertico-directory-delete-word)
+  (keymap-set vertico-map "C-c C-c" #'vertico-exit-input)
+
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
   (custom-set-faces '(vertico-current ((t (:foreground "#ffff00" :background "#5a6e7e"))))))
 
