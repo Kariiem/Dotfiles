@@ -1,12 +1,11 @@
-;; (require-package 'ivy)
-;;(require-package 'vertico)
+(require-package 'vertico)
 (require-package 'yasnippet)
 (require-package 'yasnippet-snippets)
 (require-package 'company)
 
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'prog-mode-hook 'company-mode)
 (with-eval-after-load 'company
-  (yas-global-mode 1)
+  (yas-minor-mode 1)
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "M-SPC") 'yas-maybe-expand)
