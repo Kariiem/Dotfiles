@@ -1,3 +1,3 @@
 #!/bin/bash
 
-emacs --eval "(progn (load-theme 'modus-operandi-deuteranopia t) (notmuch))"
+emacs --eval "(progn (global-display-line-numbers-mode -1) (load-theme 'modus-operandi-deuteranopia t) (notmuch))"
