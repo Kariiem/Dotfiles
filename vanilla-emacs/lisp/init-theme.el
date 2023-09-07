@@ -1,6 +1,6 @@
 (require-package 'gruber-darker-theme)
 (require-package 'modus-themes)
-(advice-add #'load-theme :before (lambda (&rest r)(mapc 'disable-theme custom-enabled-themes)))
+(advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))
 (load-theme 'gruber-darker t)
 (custom-set-faces'(widget-field ((t (:extend nil :background "gray")))))
 
