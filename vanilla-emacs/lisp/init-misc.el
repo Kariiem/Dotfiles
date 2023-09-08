@@ -22,5 +22,5 @@
 
 (auth-source-pass-enable)
 
-(custom-set-faces '(Info-quoted ((t (:foreground "orange" :underline t :slant italic :family "Jetbrains Mono")))))
+(custom-set-faces '(Info-quoted ((t (:foreground "orange" :slant italic :family "Jetbrains Mono")))))
 (provide 'init-misc)

@@ -9,7 +9,7 @@
 
 
 ;; https://emacs.stackexchange.com/questions/2347/kill-or-copy-current-line-with-minimal-keystrokes
-(defun slick-cut (beg end)
+(defun slick-cut (beg end &rest _)
   (interactive
    (if mark-active
        (list (region-beginning) (region-end))
@@ -19,7 +19,7 @@
 
 ;;
 
-(defun slick-copy (beg end)
+(defun slick-copy (beg end &rest _)
   (interactive
    (if mark-active
        (list (region-beginning) (region-end))
