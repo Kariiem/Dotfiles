@@ -1,7 +1,4 @@
-(setq-default c-syntactic-indentation t
-              c-basic-offset 4)
-(defun set-c-styles ()
-  (c-set-style "k&r"))
-
-(add-hook 'c-mode-hook 'set-c-styles)
+(setq c-default-style "stroustrup"
+      c-syntactic-indentation t)
+(add-hook 'c-mode-hook 'electric-pair-local-mode)
 (provide 'init-c)
