@@ -29,8 +29,8 @@
 
 ;;;; Base
 (require 'init-package)
-(require 'init-misc)
 (require 'init-theme)
+(require 'init-misc)
 (require 'init-window)
 (require 'init-display)
 (require 'init-minibuffer)
