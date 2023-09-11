@@ -22,7 +22,7 @@
 
   (add-hook 'org-mode-hook (lambda ()
                              (add-hook 'after-save-hook 'tangle-in-org)))
-
+  (require 'org-tempo)
   (global-set-key (kbd "C-c s") #'org-store-link)
   (global-set-key (kbd "C-c l") #'org-insert-last-stored-link)
   (global-set-key (kbd "C-c a") #'org-agenda)

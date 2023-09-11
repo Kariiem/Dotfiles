@@ -14,6 +14,7 @@
 ;;(setq debug-on-error t)
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "site" user-emacs-directory))
 ;;(require 'init-benchmarking) ;; Measure startup time
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
@@ -47,6 +48,9 @@
 (require 'init-dbg)
 (require 'init-email)
 
+;;;; Text
+(require 'init-zen)
+
 ;;;; Languages
 (require 'init-org)
 (require 'init-md)
@@ -58,4 +62,6 @@
 (require 'init-lisp)
 (require 'init-python)
 
+;;;; manual autuloading
+(load (expand-file-name "autoloadsdef.el" user-emacs-directory) nil t)
 ;; init.el ends here

@@ -13,7 +13,8 @@
 
 (with-eval-after-load 'vertico
   (setq vertico-cycle t
-        completion-styles '(flex basic)
+        completion-styles '(basic substring partial-completion emacs22)
+        vertico-resize nil
         vertico-preselect 'first)
   (keymap-set vertico-map "RET" #'vertico-directory-enter)
   (keymap-set vertico-map "DEL" #'vertico-directory-delete-char)

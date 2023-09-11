@@ -7,12 +7,9 @@
 (column-number-mode 1)
 ;; use one-based column counting
 (setq mode-line-position-column-line-format '(" (%l,%C)"))
-(setq-default whitespace-style
-              '(face empty spaces tabs newline trailing space-mark tab-mark))
 (global-whitespace-mode t)
 (global-display-line-numbers-mode 1)
 
-(setq-default indent-tabs-mode nil)
 (setq my-font
       (font-spec :family "JetBrains Mono" :size 14 :weight 'normal :slant 'normal))
 
@@ -30,10 +27,14 @@
 (setq-default inhibit-splash-screen t
               make-backup-files nil
               create-lockfiles nil
+              fill-column 80
               tab-width 4
               scroll-conservatively 101
               indent-tabs-mode nil
-              compilation-scroll-output t)
+              compilation-scroll-output t
+              whitespace-style
+              '(face empty spaces tabs newline trailing space-mark tab-mark)
+              )
 (add-hook 'after-init-hook 'visual-line-mode)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
