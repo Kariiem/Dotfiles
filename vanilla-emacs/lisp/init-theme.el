@@ -1,8 +1,11 @@
 (require-package 'gruber-darker-theme)
+(require-package 'solarized-theme)
 (require-package 'modus-themes)
 (advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))
 (load-theme 'gruber-darker t)
-(custom-set-faces'(widget-field ((t (:extend nil :background "gray")))))
+
+(custom-theme-set-faces 'gruber-darker '(widget-field ((t (:extend nil :background "gray")))))
+(custom-set-faces '(info-menu-header ((t (:family "Jetbrains Mono" :weight bold)))))
 
 (defun set-notmuch-faces ()
   (face-remap-add-relative 'notmuch-tag-face :foreground "blue")
