@@ -85,6 +85,4 @@
 (require 'init-lisp)
 (require 'init-python)
 
-;;;; manual autuloading
-(load (expand-file-name "autoloadsdef.el" user-emacs-directory) nil t)
 ;; init.el ends here

@@ -23,4 +23,5 @@
 (auth-source-pass-enable)
 
 (custom-set-faces '(Info-quoted ((t (:foreground "orange" :slant italic :family "Jetbrains Mono")))))
+(setq delete-by-moving-to-trash t)
 (provide 'init-misc)
