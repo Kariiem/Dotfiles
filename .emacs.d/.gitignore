@@ -1,0 +1,8 @@
+*
+!init.el
+!early-init.el
+!enable-commands.el
+!custom.el
+!lisp/
+!lisp/*
+!.gitignore
