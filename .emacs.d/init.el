@@ -1,7 +1,7 @@
+;;; This template is taken from Steve Purcell's config
+;; src: https://github.com/purcell/emacs.d/blob/master/init.el
+
 ;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
-
-
-
 
 ;;; Commentary:
 
@@ -13,10 +13,19 @@
 ;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
 ;;(setq debug-on-error t)
 
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "site" user-emacs-directory))
+;; Measure startup time
+;;(require 'init-benchmarking)
+;; src: https://github.com/jwiegley/dot-emacs/blob/master/init.org#report-time-spent-loading-this-module
+(defconst emacs-start-time (current-time))
 
-;;(require 'init-benchmarking) ;; Measure startup time
+(defun report-time-since-load (&optional suffix)
+  (message "Loading init...done (%.3fs)%s"
+           (float-time (time-subtract (current-time) emacs-start-time))
+           suffix))
+
+(add-hook 'after-init-hook
+          #'(lambda () (report-time-since-load " [after-init]"))
+          t)
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
@@ -27,8 +36,9 @@
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
 ;; Bootstrap config
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "site" user-emacs-directory))
 (setq custom-file (locate-user-emacs-file "custom.el"))
-
 ;; src: https://www.emacswiki.org/emacs/DisabledCommands
 (setq enable-commands-file (locate-user-emacs-file "enable-commands.el"))
 
@@ -79,6 +89,7 @@
 (require 'init-md)
 (require 'init-c)
 (require 'init-coq)
+(require 'init-haskell)
 (require 'init-gl)
 (require 'init-scheme)
 (require 'init-rust)

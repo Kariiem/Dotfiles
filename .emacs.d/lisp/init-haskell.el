@@ -1,11 +1,33 @@
 (require-package 'haskell-mode)
+(require 'speedbar)
+(require 'ghcid)
+(require 'hindent)
+
+(defun haskell-company-setup ()
+  (set (make-local-variable 'company-backends)
+       (append '((company-capf company-dabbrev-code)) company-backends)))
+
+(custom-set-variables
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t))
+
+(speedbar-add-supported-extension ".hs")
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook
-          (lambda ()
-            (set (make-local-variable 'company-backends)
-                 (append '((company-capf company-dabbrev-code))
-                         company-backends))))
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'haskell-company-setup)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
+(add-hook 'haskell-mode-hook 'hindent-mode)
+
+(with-eval-after-load 'which-func
+  (add-to-list 'which-func-modes 'haskell-mode))
+
+(with-eval-after-load 'haskell
+  (define-key interactive-haskell-mode-map (kbd "C-c C-c") 'haskell-compile))
+
+(with-eval-after-load 'haskell-cabal
+  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
 
 (provide 'init-haskell)
