@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require-package 'rfc-mode)
 (with-eval-after-load 'rfc-mode
     (setq rfc-mode-directory (expand-file-name "~/rfc/"))

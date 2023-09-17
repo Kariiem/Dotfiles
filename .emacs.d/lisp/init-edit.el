@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (package-install 'multiple-cursors)
 
 (setq kill-whole-line t)

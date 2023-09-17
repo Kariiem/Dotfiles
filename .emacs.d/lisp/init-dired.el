@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (setq read-only-dirs '("~/git/bsd-user"))
 (defun string-prefix-in-list (dir-list fname)
   (cl-some (lambda (dir) (string-prefix-p dir fname))

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require-package 'proof-general)
 (require-package 'company-coq)
 (add-hook 'coq-mode-hook #'company-coq-mode)

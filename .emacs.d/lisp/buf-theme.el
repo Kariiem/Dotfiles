@@ -1,3 +1,6 @@
+;; -*- lexical-binding: t -*-
+
+
 (defvar per-mode-theme '((notmuch-hello-mode . modus-operandi-deuteranopia)
                          (Info-mode . modus-operandi-tinted)))
 

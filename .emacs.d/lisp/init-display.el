@@ -1,4 +1,4 @@
-;; -*- lexical-binding:t -*-
+;; -*- lexical-binding: t -*-
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -7,7 +7,7 @@
 (column-number-mode 1)
 ;; use one-based column counting
 (setq mode-line-position-column-line-format '(" (%l,%C)"))
-(global-whitespace-mode t)
+;;(global-whitespace-mode t)
 (global-display-line-numbers-mode 1)
 
 (setq my-font

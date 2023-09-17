@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require 'repeat)
 (require 'auth-source-pass)
 (repeat-mode 1)

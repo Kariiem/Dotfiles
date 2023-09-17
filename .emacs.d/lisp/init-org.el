@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun position-link ()
   (interactive)
   (kill-new

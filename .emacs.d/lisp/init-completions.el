@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require-package 'vertico)
 (require-package 'yasnippet)
 (require-package 'yasnippet-snippets)

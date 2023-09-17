@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (require-package 'magit)
 
 (with-eval-after-load 'magit

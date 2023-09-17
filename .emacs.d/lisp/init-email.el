@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (autoload 'notmuch "notmuch" "notmuch mail" t)
 
 (with-eval-after-load 'notmuch

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun define-key-chord (key-map key fun)
   (let ((key1 (aref (string-to-vector (kbd key)) 0))
         (key2 (aref (string-to-vector (kbd key)) 1))

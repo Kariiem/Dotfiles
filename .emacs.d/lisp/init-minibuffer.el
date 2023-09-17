@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require-package 'amx)
 (amx-mode 1)
 (setq recentf-max-menu-items 1000)

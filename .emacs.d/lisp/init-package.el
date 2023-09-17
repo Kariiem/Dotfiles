@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require 'package)
 
 (defun require-package (package)
@@ -12,5 +14,5 @@
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-
+(setq load-prefer-newer t)
 (provide 'init-package)

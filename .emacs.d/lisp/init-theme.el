@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (require-package 'gruber-darker-theme)
 (require-package 'solarized-theme)
 (require-package 'dracula-theme)

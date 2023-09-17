@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require-package 'haskell-mode)
 (require 'speedbar)
 (require 'ghcid)
@@ -16,13 +18,13 @@
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'haskell-company-setup)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
+;;(add-hook 'haskell-mode-hook 'haskell-unicode-input-method-enable)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
 (add-hook 'haskell-mode-hook 'hindent-mode)
 
 (with-eval-after-load 'which-func
-  (add-to-list 'which-func-modes 'haskell-mode))
+  (and (listp 'which-func-modes) (add-to-list 'which-func-modes 'haskell-mode)))
 
 (with-eval-after-load 'haskell
   (define-key interactive-haskell-mode-map (kbd "C-c C-c") 'haskell-compile))

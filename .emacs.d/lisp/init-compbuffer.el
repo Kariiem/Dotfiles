@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun id (p) p)
 (defun mk-completion-metadata (string table pred category display-sort-function)
   (let ((metadata (if (functionp table)
