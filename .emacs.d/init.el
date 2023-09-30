@@ -1,7 +1,8 @@
+;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
+
 ;;; This template is taken from Steve Purcell's config
 ;; src: https://github.com/purcell/emacs.d/blob/master/init.el
 
-;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -24,7 +25,7 @@
            suffix))
 
 (add-hook 'after-init-hook
-          #'(lambda () (report-time-since-load " [after-init]"))
+          (lambda () (report-time-since-load " [after-init]"))
           t)
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
@@ -71,8 +72,9 @@
 (require 'init-edit)
 (require 'init-dired)
 (require 'init-completions)
+(require 'init-compile)
 ;;(require 'init-evil)
-(require 'init-keychords)
+;;(require 'init-keychords)
 
 ;;;; Tools
 (require 'init-magit)
@@ -80,7 +82,9 @@
 (require 'init-rg)
 (require 'init-dbg)
 (require 'init-email)
-
+(require 'init-pdf)
+(require 'init-compile)
+(require 'init-irc)
 ;;;; Text
 (require 'init-zen)
 
@@ -90,10 +94,12 @@
 (require 'init-c)
 (require 'init-coq)
 (require 'init-haskell)
+(require 'init-ocaml)
+(require 'init-sml)
 (require 'init-gl)
 (require 'init-scheme)
 (require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
-
+(require 'init-asm)
 ;; init.el ends here

@@ -21,4 +21,8 @@
 (put 'delete-window 'repeat-map 'window-ctrl-map)
 
 (global-set-key (kbd "C-c w") window-ctrl)
+(setq windmove-wrap-around t)
+(windmove-default-keybindings)
+(which-function-mode 1)
+
 (provide 'init-window)

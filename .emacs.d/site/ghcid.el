@@ -52,8 +52,7 @@ recognize the new height until you manually restart it by calling
 `ghcid' again.
 "
   :lighter " Ghcid"
-  (when (fboundp 'nlinum-mode) (nlinum-mode -1))
-  (linum-mode -1)
+  (display-line-numbers-mode -1)
   (compilation-minor-mode))
 
 
@@ -109,7 +108,7 @@ exactly. See `ghcid-mode'."
       (ghcid-mode)
 
       (setq-local term-buffer-maximum-size height)
-      (setq-local scroll-up-aggressively 1)
+      (setq-local scroll-up-aggressively 1.0)
       (setq-local show-trailing-whitespace nil)
 
       (term-exec (ghcid-buffer-name)

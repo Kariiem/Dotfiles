@@ -29,7 +29,39 @@
         notmuch-show-header-line nil
         notmuch-wash-wrap-lines-length 80
         notmuch-hello-sections '(notmuch-hello-insert-recent-searches
-                                 notmuch-hello-insert-alltags)))
+                                 notmuch-hello-insert-alltags))
+
+  (defvar notmuch-show-toggle-visibility-headers-all nil
+    "Current state of all the message headers visibility in the current thread.")
+
+  (defun notmuch-show-toggle-visibility-headers-all ()
+    "Toggle the visibility of all the message headers in the current thread."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (cl-loop do (let ((props (notmuch-show-get-message-properties)))
+                    (notmuch-show-headers-visible
+                     props
+                     notmuch-show-toggle-visibility-headers-all))
+	           until (not (notmuch-show-goto-message-next))))
+    (setq notmuch-show-toggle-visibility-headers-all (not notmuch-show-toggle-visibility-headers-all))
+    (force-window-update))
+;; src: https://nmbug.notmuchmail.org/nmweb/show/m2o7jckxcs.fsf%40jon-mbp.lan
+  (defun notmuch-async-poll ()
+  "Invoke `notmuch new` to import mail, asynchronously, then refresh the current buffer."
+    (interactive)
+    (message "Polling mail (async)...")
+    (notmuch-start-notmuch "*notmuch-async-poll*"
+                           nil
+                           (lambda (proc string)
+                             (notmuch-refresh-this-buffer)
+                             (message "Polling mail (async)...done"))
+                           "new"))
+  (define-key notmuch-show-mode-map [remap notmuch-poll-and-refresh-this-buffer] 'notmuch-async-poll)
+  (define-key notmuch-search-mode-map [remap notmuch-poll-and-refresh-this-buffer] 'notmuch-async-poll)
+  (define-key notmuch-hello-mode-map [remap notmuch-poll-and-refresh-this-buffer] 'notmuch-async-poll)
+  (define-key notmuch-show-mode-map "H" 'notmuch-show-toggle-visibility-headers-all))
+
 ;;(remove-hook 'notmuch-show-hook 'notmuch-show-turn-on-visual-line-mode)
 
 (defun notmuch-show-subject-tabs-to-spaces ()
@@ -40,5 +72,7 @@
       (replace-match " " nil nil))))
 
 (add-hook 'notmuch-show-markup-headers-hook 'notmuch-show-subject-tabs-to-spaces)
+
+;;
 
 (provide 'init-email)

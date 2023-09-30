@@ -3,6 +3,8 @@
 !early-init.el
 !enable-commands.el
 !custom.el
+!site/
+!site/*
 !lisp/
 !lisp/*
 !.gitignore

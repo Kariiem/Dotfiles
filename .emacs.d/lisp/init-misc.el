@@ -2,6 +2,7 @@
 
 (require 'repeat)
 (require 'auth-source-pass)
+(require 'bison-mode)
 (repeat-mode 1)
 ;; source: https://www.reddit.com/r/emacs/comments/vs4jqm/it_bears_repeating_emacs_28_repeat_mode/
 ;; https://www.emacswiki.org/emacs/Repeatable

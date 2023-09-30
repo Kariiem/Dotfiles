@@ -7,7 +7,7 @@
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(package-selected-packages
-   '(yasnippet-snippets writeroom-mode vertico solarized-theme rust-mode rg rfc-mode realgud proof-general paredit olivetti multiple-cursors modus-themes markdown-mode magit lispy haskell-mode gruber-darker-theme glsl-mode git geiser-guile evil elpy dracula-theme company-coq amx)))
+   '(tuareg tuareg-mode yasnippet-snippets writeroom-mode vertico solarized-theme sml-mode saveplace-pdf-view rust-mode rg rfc-mode realgud proof-general pdf-tools paredit olivetti nasm-mode multiple-cursors modus-themes markdown-mode magit lispy haskell-mode gruber-darker-theme glsl-mode git geiser-guile evil elpy dracula-theme company-coq amx)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

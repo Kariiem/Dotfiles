@@ -26,7 +26,7 @@ case "$choice" in
     *) exit 1 ;;
 esac
 
-local target=( "Save" "Clip" "Both" )
+target=( "Save" "Clip" "Both" )
 
 choice=$(printf '%s\n' "${target[@]}" | dmenu -p "Select Option") || exit 1
 case "$choice" in

@@ -13,3 +13,18 @@
 ;;(define-key-chord nil "jk" (lambda () (message "hello from keychords")))
 (global-set-key (kbd "C-q") 'save-buffers-kill-emacs)
 (provide 'init-keychords)
+
+
+(defvar custom-wait-key 0.2
+  "")
+
+(let ((k1 (read-key nil))
+      (timed-out nil))
+  (catch 'done
+    (progn
+      (with-timeout (custom-wait-key (setq timed-out t))
+        (let ((k2 (read-key nil)))
+          (message "you pressed [%s]" (key-description (vector k1 k2)))))
+      (when timed-out
+        (insert k1))
+      (throw 'done nil))))
