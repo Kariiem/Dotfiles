@@ -46,6 +46,19 @@
 	           until (not (notmuch-show-goto-message-next))))
     (setq notmuch-show-toggle-visibility-headers-all (not notmuch-show-toggle-visibility-headers-all))
     (force-window-update))
+
+  (defun notmuch-show-mark-thread-read (&optional unread)
+    "Mark the current message as read.
+
+Mark the current thread as read by applying the tag changes in
+`notmuch-show-mark-read-tags' to it (remove the \"unread\" tag by
+default). If a prefix argument is given, the message will be
+marked as unread, i.e. the tag changes in
+`notmuch-show-mark-read-tags' will be reversed."
+    (interactive "P")
+    (save-excursion (cl-loop do (notmuch-show-mark-read unread)
+                             until (not (notmuch-show-next-message)))))
+  
 ;; src: https://nmbug.notmuchmail.org/nmweb/show/m2o7jckxcs.fsf%40jon-mbp.lan
   (defun notmuch-async-poll ()
   "Invoke `notmuch new` to import mail, asynchronously, then refresh the current buffer."

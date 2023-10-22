@@ -102,4 +102,7 @@
 (require 'init-lisp)
 (require 'init-python)
 (require 'init-asm)
+
+;;;; Build tools
+(require 'init-build)
 ;; init.el ends here

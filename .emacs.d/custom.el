@@ -3,11 +3,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("3d94d6d1a1c23113a60c8496c9aed094dbc2695f219e8127bb168d17b1e6dab3" default))
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
- '(haskell-process-suggest-remove-import-lines t)
- '(package-selected-packages
-   '(tuareg tuareg-mode yasnippet-snippets writeroom-mode vertico solarized-theme sml-mode saveplace-pdf-view rust-mode rg rfc-mode realgud proof-general pdf-tools paredit olivetti nasm-mode multiple-cursors modus-themes markdown-mode magit lispy haskell-mode gruber-darker-theme glsl-mode git geiser-guile evil elpy dracula-theme company-coq amx)))
+ '(haskell-process-suggest-remove-import-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
