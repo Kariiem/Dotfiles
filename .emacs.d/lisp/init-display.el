@@ -11,7 +11,7 @@
 (global-display-line-numbers-mode 1)
 
 (setq my-font
-      (font-spec :family "JetBrains Mono" :size 14 :weight 'normal :slant 'normal))
+      (font-spec :family "JetBrains Mono" :size 16 :weight 'normal :slant 'normal))
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
