@@ -3,7 +3,7 @@ set window-title-basename true
 
 ### Recolor mode settings ###
 set recolor-lightcolor          "#000000" # Background
-set recolor-darkcolor           "#ffffff" # Foreground
+set recolor-darkcolor           "#748894" # Foreground
 
 ### Zoom settings ###
 set zoom-step 5
@@ -23,7 +23,7 @@ map <A-Space> zoom best-fit
 
 ## Normal Mode
 # Invert   
-map [normal] ! feedkeys ":set recolor-lightcolor \#000000 <Return>:<Esc>:set recolor-darkcolor \#ffffff <Return>"
+map [normal] ! feedkeys ":set recolor-lightcolor \#000000 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"
 
 # Normal
 map [normal] @ feedkeys ":set recolor-lightcolor \#ffffff <Return>:<Esc>:set recolor-darkcolor \#000000 <Return>"

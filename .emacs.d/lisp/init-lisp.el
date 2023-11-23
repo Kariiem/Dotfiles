@@ -9,4 +9,5 @@
 ;;     (lispy-mode 1)))
 ;; (add-hook 'minibuffer-setup-hook 'conditionally-enable-lispy)
 (require-package 'paredit)
+(paredit-mode)
 (provide 'init-lisp)
