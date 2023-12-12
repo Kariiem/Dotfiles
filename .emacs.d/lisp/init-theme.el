@@ -23,5 +23,15 @@
   (add-hook 'notmuch-message-mode-hook 'set-notmuch-faces)
   (add-hook 'notmuch-show-mode-hook 'set-notmuch-faces))
 
-
+(custom-set-variables
+ '(custom-safe-themes
+   (append '(default)
+           (mapcar
+            (lambda (filename)
+              (with-temp-buffer
+                (insert-file-contents filename)
+                (secure-hash 'sha256 (buffer-string))))
+            (file-expand-wildcards (concat user-emacs-directory
+                                           "elpa/*/*-theme.el"))))))
 (provide 'init-theme)
+

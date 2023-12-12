@@ -8,7 +8,9 @@
 (require-package 'macrostep-geiser)
 
 (with-eval-after-load 'geiser
+  (prettify-symbols-mode)
+  (paredit-mode)
   (setq geiser-mode-start-repl-p t
         geiser-chez-binary "chez"))
-(paredit-mode)
+
 (provide 'init-scheme)

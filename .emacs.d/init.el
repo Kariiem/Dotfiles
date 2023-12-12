@@ -89,6 +89,9 @@
 (require 'init-zen)
 
 ;;;; Languages
+;; General settings
+(with-eval-after-load 'prog-mode
+  (electric-pair-mode 1))
 (require 'init-org)
 (require 'init-md)
 (require 'init-c)

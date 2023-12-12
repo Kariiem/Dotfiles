@@ -3,7 +3,7 @@ set window-title-basename true
 
 ### Recolor mode settings ###
 set recolor-lightcolor          "#000000" # Background
-set recolor-darkcolor           "#748894" # Foreground
+set recolor-darkcolor           "#758894" # Foreground
 
 ### Zoom settings ###
 set zoom-step 5
@@ -23,7 +23,7 @@ map <A-Space> zoom best-fit
 
 ## Normal Mode
 # Invert   
-map [normal] ! feedkeys ":set recolor-lightcolor \#000000 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"
+map [normal] ! feedkeys ":set recolor-lightcolor \#000000 <Return>:<Esc>:set recolor-darkcolor \#758894 <Return>"
 
 # Normal
 map [normal] @ feedkeys ":set recolor-lightcolor \#ffffff <Return>:<Esc>:set recolor-darkcolor \#000000 <Return>"
@@ -31,14 +31,11 @@ map [normal] @ feedkeys ":set recolor-lightcolor \#ffffff <Return>:<Esc>:set rec
 # nord        
 map [normal] \# feedkeys ":set recolor-lightcolor \#1a1c26 <Return>:<Esc>:set recolor-darkcolor \#9ba7c4 <Return>"
 
-# dark   
-map [normal] $ feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#4778A0 <Return>"
-
 # bluish midnight
-map [normal] % feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#839496 <Return>" 
+map [normal] $ feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#839496 <Return>" 
 
 #     
-map [normal] ^ feedkeys ":set recolor-lightcolor \#222222 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"  
+map [normal] % feedkeys ":set recolor-lightcolor \#222223 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"  
 
 ## Fullscreen Mode
 # Normal   
@@ -49,13 +46,11 @@ map [fullscreen] @ feedkeys ":set recolor-lightcolor \#ffffff <Return>:<Esc>:set
 
 # nord        
 map [fullscreen] \# feedkeys ":set recolor-lightcolor \#1a1c26 <Return>:<Esc>:set recolor-darkcolor \#9ba7c4 <Return>"
-# dark   
-map [fullscreen] $ feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#4778A0 <Return>"
 
 # bluish midnight
-map [fullscreen] % feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#839496 <Return>" 
+map [fullscreen] $ feedkeys ":set recolor-lightcolor \#002b36 <Return>:<Esc>:set recolor-darkcolor \#839496 <Return>" 
 
 #     
-map [fullscreen] ^ feedkeys ":set recolor-lightcolor \#222222 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"  
+map [fullscreen] % feedkeys ":set recolor-lightcolor \#222222 <Return>:<Esc>:set recolor-darkcolor \#748894 <Return>"  
 
 
