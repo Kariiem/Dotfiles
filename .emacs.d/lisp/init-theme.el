@@ -5,9 +5,7 @@
 (require-package 'modus-themes)
 
 (advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))
-(load-theme 'gruber-darker t)
 
-;;(custom-theme-set-faces 'gruber-darker '(widget-field ((t (:extend nil :background "gray")))))
 (custom-set-faces '(info-menu-header ((t (:family "Jetbrains Mono" :weight bold)))))
 
 (defun set-notmuch-faces ()
