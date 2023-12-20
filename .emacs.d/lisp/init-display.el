@@ -1,10 +1,5 @@
 ;; -*- lexical-binding: t -*-
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(show-paren-mode 1)
-(column-number-mode 1)
 ;; use one-based column counting
 (setq mode-line-position-column-line-format '(" (%l,%C)"))
 ;;(global-whitespace-mode t)
@@ -17,13 +12,10 @@
           (lambda (frame)
             (set-face-attribute 'default nil :font my-font)
             (scroll-bar-mode -1)))
+
 (set-face-attribute 'default nil :font my-font)
 
 (setq default-frame-alist nil)
-(setq-default whitespace-display-mappings '((space-mark 32 [183] [46])
-                                            (space-mark 160 [164] [95])
-                                            (tab-mark 9 [187 9] [92 9])))
-
 (setq-default inhibit-splash-screen t
               make-backup-files nil
               create-lockfiles nil
@@ -33,10 +25,7 @@
               indent-tabs-mode nil
               compilation-scroll-output t
               whitespace-style
-              '(face empty spaces tabs newline trailing space-mark tab-mark)
-              )
-(add-hook 'after-init-hook 'visual-line-mode)
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+              '(face empty spaces tabs newline trailing space-mark tab-mark))
 
 (defun toggle-dedicate-window ()
   (interactive)

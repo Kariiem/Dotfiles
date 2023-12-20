@@ -25,8 +25,13 @@
            suffix))
 
 (add-hook 'after-init-hook
-          (lambda () (report-time-since-load " [after-init]"))
+          (lambda ()
+            (report-time-since-load " [after-init]")
+            (condition-case nil (call-interactively 'load-theme)
+              (error nil)
+              ('quit nil)))
           t)
+
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
@@ -64,11 +69,11 @@
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
 (require 'init-package)
+(require 'init-base)
 (require 'init-theme)
 (require 'init-misc)
 (require 'init-window)
 (require 'init-display)
-(require 'init-minibuffer)
 (require 'init-edit)
 (require 'init-dired)
 (require 'init-completions)
@@ -85,7 +90,7 @@
 (require 'init-pdf)
 (require 'init-compile)
 (require 'init-irc)
-;;;; Text
+(require 'init-eww)
 (require 'init-zen)
 
 ;;;; Languages
@@ -94,18 +99,24 @@
   (electric-pair-mode 1))
 (require 'init-org)
 (require 'init-md)
+(require 'init-gl)
+(require 'init-asm)
 (require 'init-c)
+(require 'init-rust)
 (require 'init-coq)
 (require 'init-haskell)
 (require 'init-ocaml)
 (require 'init-sml)
-(require 'init-gl)
+(require 'init-fsharp)
+(require 'init-kotlin)
 (require 'init-scheme)
-(require 'init-rust)
 (require 'init-lisp)
 (require 'init-python)
-(require 'init-asm)
+(require 'init-ruby)
+(require 'init-lua)
+(require 'init-raku)
 
 ;;;; Build tools
 (require 'init-build)
 ;; init.el ends here
+
