@@ -12,7 +12,11 @@
       recentf-auto-cleanup 'never
       whitespace-style '(face tabs spaces trailing
                               indentation space-mark tab-mark
-                              missing-newline-at-eof))
+                              missing-newline-at-eof)
+      my-font (font-spec :family "JetBrains Mono"
+                         :size 16
+                         :weight 'normal
+                         :slant 'normal))
 
 (setq-default create-lockfiles nil
               fill-column 80
@@ -35,8 +39,6 @@
                     (advice-remove #'vertico--metadata-get 'recentf-fix-category))))
 
 
-(setq my-font
-      (font-spec :family "JetBrains Mono" :size 16 :weight 'normal :slant 'normal))
 (set-face-attribute 'default nil :font my-font)
 
 (menu-bar-mode -1)

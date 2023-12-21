@@ -35,11 +35,13 @@
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
 
-(let ((normal-gc-cons-threshold (* 20 1024 1024))
-      (init-gc-cons-threshold (* 128 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
+(let ((normal-gc-cons-threshold (* 20 1024 1024)) ;; 20 mb
+      (init-gc-cons-threshold most-positive-fixnum))
+  (setq gc-cons-threshold init-gc-cons-threshold
+        gc-cons-percentage 0.6)
   (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
+            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold
+                             gc-cons-percentage 0.1))))
 
 ;; Bootstrap config
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -73,7 +75,6 @@
 (require 'init-theme)
 (require 'init-misc)
 (require 'init-window)
-(require 'init-display)
 (require 'init-edit)
 (require 'init-dired)
 (require 'init-completions)
