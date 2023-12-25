@@ -4,7 +4,7 @@
       make-backup-files nil
       scroll-conservatively 101
       frame-inhibit-implied-resize t
-      text-scale-mode-step (expt 2 (/ 1.0 3.0))
+      text-scale-mode-step (expt 2 (/ 1.0 4.0))
       mode-line-position-column-line-format '(" (%l,%C)")
       compilation-scroll-output t
       recentf-max-menu-items 1000
@@ -54,5 +54,7 @@
 (whitespace-mode 1)
 (which-function-mode 1)
 
+
+(add-to-list 'Info-directory-list (expand-file-name "info" user-emacs-directory))
 
 (provide 'init-base)
