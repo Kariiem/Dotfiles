@@ -6,4 +6,6 @@
 !site/*
 !lisp/
 !lisp/*
+!minor-modes/
+!minor-modes/*
 !.gitignore

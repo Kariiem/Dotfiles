@@ -10,7 +10,6 @@
   (yas-minor-mode 1)
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (define-key yas-minor-mode-map (kbd "M-SPC") 'yas-maybe-expand)
   (define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand))
 
 (with-eval-after-load 'vertico
@@ -30,9 +29,8 @@
                   '(completions-first-difference ((t (:foreground "#ff00ff" :weight extra-bold)))))
 ;;(fido-vertical-mode 1)
 
-(setq completion-auto-help nil)
-
-(setq company-selection-wrap-around t
+(setq completion-auto-help nil
+      company-selection-wrap-around t
       company-dabbrev-downcase 0
       company-idle-delay 0
       company-minimum-prefix-length 3)

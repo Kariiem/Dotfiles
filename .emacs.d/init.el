@@ -44,9 +44,12 @@
                              gc-cons-percentage 0.1))))
 
 ;; Bootstrap config
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "site" user-emacs-directory))
+(let ((dirs '("lisp" "minor-modes" "site")))
+  (dolist (d dirs)
+    (add-to-list 'load-path (expand-file-name d user-emacs-directory))))
+
 (setq custom-file (locate-user-emacs-file "custom.el"))
+
 ;; src: https://www.emacswiki.org/emacs/DisabledCommands
 (setq enable-commands-file (locate-user-emacs-file "enable-commands.el"))
 
@@ -67,6 +70,21 @@
       (save-buffer))))
 
 (advice-add 'en/disable-command :around #'en/disable-commands-in-separate-file)
+
+(defun generate&load-directory-autoloads (dir &optional autoload-file-name force)
+  (let ((filepath (expand-file-name autoload-file-name dir))
+        (m))
+    (if (or (not (file-exists-p filepath)) force)
+        (progn (loaddefs-generate dir filepath)
+               (setq m `("`%s' autoload-file generated from `%s'"
+                                ,filepath ,dir)))
+      (setq m `("`%s' autoload-file already exists" ,filepath)))
+    (load filepath nil t)
+    (apply #'message m)))
+
+(generate&load-directory-autoloads (expand-file-name "minor-modes"
+                                                user-emacs-directory)
+                                   "autoload-minor-modes.el")
 
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
@@ -120,4 +138,3 @@
 ;;;; Build tools
 (require 'init-build)
 ;; init.el ends here
-
