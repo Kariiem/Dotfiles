@@ -1,8 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'ruby-end)
-(require-package 'inf-ruby)
-(require-package 'robe)
+(install-pkgs ruby-end
+              inf-ruby
+              robe)
 
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-ts-mode-hook 'robe-mode)

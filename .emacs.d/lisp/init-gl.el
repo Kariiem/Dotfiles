@@ -1,4 +1,4 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'glsl-mode)
+(install-pkgs glsl-mode)
 (provide 'init-gl)

@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'evil)
+(install-pkgs evil)
 (setq evil-cross-lines t)
 (evil-mode 1)
 

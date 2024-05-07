@@ -1,11 +1,11 @@
 ;; -*- lexical-binding: t -*-
-(require-package 'geiser)
-(require-package 'geiser-chez)
-(require-package 'geiser-guile)
-(require-package 'geiser-gambit)
-(require-package 'geiser-mit)
-(require-package 'geiser-racket)
-(require-package 'macrostep-geiser)
+(install-pkgs geiser
+              geiser-chez
+              geiser-guile
+              geiser-gambit
+              geiser-mit
+              geiser-racket
+              macrostep-geiser)
 
 (with-eval-after-load 'geiser
   (prettify-symbols-mode)

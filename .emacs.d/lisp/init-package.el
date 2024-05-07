@@ -2,14 +2,18 @@
 
 (require 'package)
 
-(defun require-package (package)
+(defun install-package (package)
   (unless (package-installed-p package)
     (package-install package)))
 
-(defun maybe-require-package (package)
+(defun maybe-install-package (package)
   (condition-case err
-      (require-package package)
+      (install-package package)
     (error (message "Package `%s' couldn't be installed: %s" package err))))
+
+(defmacro install-pkgs (one &rest pkgs)
+  `(let ((pkgs (cons ',one ',pkgs)))
+     (mapcar #'maybe-install-package pkgs)))
 
 (setq package-enable-at-startup nil
       package-install-upgrade-built-in t

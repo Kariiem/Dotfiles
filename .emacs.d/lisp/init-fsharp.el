@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'fsharp-mode)
+(install-pkgs fsharp-mode)
 
 (provide 'init-fsharp)

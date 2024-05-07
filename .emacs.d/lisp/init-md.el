@@ -1,4 +1,4 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'markdown-mode)
+(install-pkgs markdown-mode)
 (provide 'init-md)

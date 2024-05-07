@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'raku-mode)
+(install-pkgs raku-mode)
 
 (provide 'init-raku)

@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'haskell-mode)
+(install-pkgs haskell-mode)
 (require 'speedbar)
 (require 'ghcid)
 (require 'hindent)

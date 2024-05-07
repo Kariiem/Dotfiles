@@ -1,8 +1,8 @@
 ;; -*- lexical-binding: t -*-
-(require-package 'gruber-darker-theme)
-(require-package 'solarized-theme)
-(require-package 'dracula-theme)
-(require-package 'modus-themes)
+(install-pkgs gruber-darker-theme
+              solarized-theme
+              dracula-theme
+              modus-themes)
 
 (advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))
 
@@ -32,4 +32,3 @@
             (file-expand-wildcards (concat user-emacs-directory
                                            "elpa/*/*-theme.el"))))))
 (provide 'init-theme)
-

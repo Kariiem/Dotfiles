@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'olivetti)
-(require-package 'writeroom-mode)
+(install-pkgs olivetti
+              writeroom-mode)
 (provide 'init-zen)

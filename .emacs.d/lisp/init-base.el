@@ -63,7 +63,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(amx-mode 1)
+;;(amx-mode 1)
 (savehist-mode 1)
 (recentf-mode 1)
 (column-number-mode 1)
@@ -76,7 +76,8 @@
 (global-nomouse-mode 1)
 (global-todowords-mode 1)
 
-(add-to-list 'Info-directory-list (expand-file-name "info" user-emacs-directory))
+(with-eval-after-load 'info-mode
+  (add-to-list 'Info-directory-list (expand-file-name "info" user-emacs-directory)))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

@@ -1,5 +1,5 @@
 ;;; -*- lexical-binding: t -*-
 
-(require-package 'tuareg)
+(install-pkgs tuareg)
 
 (provide 'init-ocaml)

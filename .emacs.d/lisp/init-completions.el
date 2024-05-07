@@ -1,9 +1,9 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'vertico)
-(require-package 'yasnippet)
-(require-package 'yasnippet-snippets)
-(require-package 'company)
+(install-pkgs vertico
+              yasnippet
+              yasnippet-snippets
+              company)
 
 (add-hook 'prog-mode-hook 'company-mode)
 (with-eval-after-load 'company

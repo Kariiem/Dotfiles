@@ -1,4 +1,4 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'rust-mode)
+(install-pkgs rust-mode)
 (provide 'init-rust)

@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t -*-
-(require-package 'magit)
+(install-pkgs magit)
 
 (with-eval-after-load 'magit
   (transient-define-argument magit-commit:--reedit-message ()

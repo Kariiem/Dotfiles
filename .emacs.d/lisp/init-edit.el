@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'multiple-cursors)
+(install-pkgs multiple-cursors)
 
 (setq kill-whole-line t)
 (delete-selection-mode 1)

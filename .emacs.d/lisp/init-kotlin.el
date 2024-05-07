@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'kotlin-mode)
+(install-pkgs kotlin-mode)
 
 (provide 'init-kotlin)

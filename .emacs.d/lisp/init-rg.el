@@ -1,4 +1,4 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'rg)
+(install-pkgs rg)
 (provide 'init-rg)

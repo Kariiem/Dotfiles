@@ -1,5 +1,5 @@
 ;;; -*- lexical-binding: t -*-
 
-(require-package 'sml-mode)
+(install-pkgs sml-mode)
 
 (provide 'init-sml)

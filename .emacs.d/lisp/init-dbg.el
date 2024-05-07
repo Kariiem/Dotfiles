@@ -1,4 +1,4 @@
 ;; -*- lexical-binding: t -*-
 
-(require-package 'realgud)
+(install-pkgs realgud)
 (provide 'init-dbg)

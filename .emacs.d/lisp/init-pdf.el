@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
-(require-package 'pdf-tools)
-(require-package 'saveplace-pdf-view)
+(install-pkgs pdf-tools
+              saveplace-pdf-view)
 (pdf-loader-install)
 
 (setq-default pdf-view-display-size 'fit-page)
@@ -29,7 +29,7 @@ See `scroll-down-command' for details."
 (with-eval-after-load 'pdf-view
   (add-hook 'pdf-view-mode-hook (lambda ()
                                   (display-line-numbers-mode -1)))
-  
+
   (global-set-key [remap scroll-other-window] 'pdf/scroll-other-window-up)
   (global-set-key  [remap scroll-other-window-down] 'pdf/scroll-other-window-down)
   (define-key pdf-view-mode-map "n" 'pdf-view-next-line-or-next-page)

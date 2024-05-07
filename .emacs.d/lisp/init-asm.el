@@ -1,5 +1,5 @@
 ;;; -*- lexical-binding: t -*-
 
-(require-package 'nasm-mode)
+(install-pkgs nasm-mode)
 
 (provide 'init-asm)

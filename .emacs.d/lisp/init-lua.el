@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'lua-mode)
+(install-pkgs lua-mode)
 
 (with-eval-after-load 'lua-mode
   (setq lua-indent-level 4))

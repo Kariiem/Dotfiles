@@ -109,6 +109,7 @@
 (require 'init-pdf)
 (require 'init-compile)
 (require 'init-irc)
+(require 'init-matrix)
 (require 'init-eww)
 (require 'init-zen)
 
@@ -116,6 +117,7 @@
 ;; General settings
 (with-eval-after-load 'prog-mode
   (electric-pair-mode 1))
+(require 'init-nix)
 (require 'init-org)
 (require 'init-md)
 (require 'init-gl)

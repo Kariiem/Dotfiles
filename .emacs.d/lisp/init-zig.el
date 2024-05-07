@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(require-package 'zig-mode)
+(install-pkgs zig-mode)
 
 (provide 'init-zig)
