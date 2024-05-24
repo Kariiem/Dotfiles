@@ -77,7 +77,9 @@
 (global-todowords-mode 1)
 
 (with-eval-after-load 'info
-  (add-to-list 'Info-directory-list (expand-file-name "info" user-emacs-directory)))
+  (add-to-list 'Info-directory-list
+               (expand-file-name "info" user-emacs-directory)))
+
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

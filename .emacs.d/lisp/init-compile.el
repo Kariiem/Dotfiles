@@ -9,8 +9,17 @@
   (interactive)
   (recompile t))
 
+(defun compilation-cd ()
+  (interactive)
+  (when (eq major-mode 'compilation-mode)
+    (setq-local compilation-directory
+                (read-directory-name "Compilation directory: "
+                                     compilation-directory))
+    (recompile-with-edit)))
+
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 (with-eval-after-load 'compile
+  (define-key compilation-mode-map "d" 'compilation-cd)
   (define-key compilation-mode-map "r" 'recompile-with-edit))
 (provide 'init-compile)
