@@ -109,6 +109,7 @@
 (require 'init-pdf)
 (require 'init-compile)
 (require 'init-irc)
+(require 'init-ement)
 (require 'init-matrix)
 (require 'init-eww)
 (require 'init-zen)
@@ -136,6 +137,7 @@
 (require 'init-ruby)
 (require 'init-lua)
 (require 'init-raku)
+(require 'init-go)
 
 ;;;; Build tools
 (require 'init-build)
