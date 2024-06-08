@@ -430,7 +430,7 @@ function update_margins()
 	state.margin_top = top
 	state.margin_bottom = bottom
 
-	utils.shared_script_property_set('osc-margins', string.format('%f,%f,%f,%f', 0, 0, top, bottom))
+	-- utils.shared_script_property_set('osc-margins', string.format('%f,%f,%f,%f', 0, 0, top, bottom))
 end
 function create_state_setter(name, callback)
 	return function(_, value)
@@ -1005,6 +1005,19 @@ bind_command('items', function()
 		mp.command('script-binding uosc/open-file')
 	end
 end)
+bind_command('reset-speed', function()
+                 state.speed = 1
+                 mp.set_property('speed', state.speed)
+end)
+bind_command('inc-speed', function()
+                 state.speed = state.speed + defaults.speed_step
+                 mp.set_property('speed', state.speed)
+end)
+bind_command('dec-speed', function()
+                 state.speed = state.speed - defaults.speed_step
+                 mp.set_property('speed', state.speed)
+end)
+
 bind_command('next', function() navigate_item(1) end)
 bind_command('prev', function() navigate_item(-1) end)
 bind_command('next-file', function() navigate_directory(1) end)

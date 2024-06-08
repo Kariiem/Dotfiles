@@ -9,11 +9,11 @@
   (interactive)
   (recompile t))
 
-(defun compilation-cd ()
+(defun compile-cd ()
   (interactive)
   (when (eq major-mode 'compilation-mode)
     (setq-local compilation-directory
-                (read-directory-name "Compilation directory: "
+                (read-directory-name "Compile directory: "
                                      compilation-directory))
     (recompile-with-edit)))
 

@@ -7,3 +7,4 @@ end
 function ec
   emacs --with-profile "vanilla"
 end
+starship init fish | source
