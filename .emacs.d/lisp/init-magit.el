@@ -22,10 +22,20 @@
                            (or default
                                (and (magit-rev-verify "ORIG_HEAD")
                                     "ORIG_HEAD"))))
+  (defun magit-push-all ()
+    "Push all branches."
+    (interactive)
+    (magit-run-git-async "push" "-v"
+                         (magit-read-remote "Remote")
+                         "--all"))
 
-  (transient-append-suffix
-    'magit-commit "-C" '(magit-commit:--reedit-message))
-  (transient-append-suffix
-    'magit-remote "a" '("l" "List all remotes" magit-remote-list-remotes)))
+  (transient-append-suffix 'magit-commit
+    "-C" '(magit-commit:--reedit-message))
+
+  (transient-append-suffix 'magit-push
+    "-n" '("-a" "--all" magit-push-all))
+
+  (transient-append-suffix 'magit-remote "a"
+    '("l" "List all remotes" magit-remote-list-remotes)))
 
 (provide 'init-magit)
