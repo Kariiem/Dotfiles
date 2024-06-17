@@ -48,4 +48,24 @@
 
 (global-set-key (kbd "C-,") 'dup-line)
 
+
+(defvar hidden-regions nil
+  "list of hidden regions")
+
+(defun hide-region ()
+  (interactive)
+  (when mark-active
+    (let ((beg (region-beginning))
+          (end (region-end)))
+      (put-text-property beg end 'invisible 'hidden)
+      (push (cons beg end) hidden-regions))))
+
+(defun unhide-last-region ()
+  (interactive)
+  (if hidden-regions
+      (let ((last-region (pop hidden-regions)))
+        (put-text-property (car last-region) (cdr last-region) 'invisible nil))
+    (error "No hidden regions found")))
+
+
 (provide 'init-edit)

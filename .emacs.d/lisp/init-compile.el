@@ -20,6 +20,6 @@
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 (with-eval-after-load 'compile
-  (define-key compilation-mode-map "d" 'compilation-cd)
+  (define-key compilation-mode-map "d" 'compile-cd)
   (define-key compilation-mode-map "r" 'recompile-with-edit))
 (provide 'init-compile)
