@@ -138,6 +138,7 @@
 (require 'init-lua)
 (require 'init-raku)
 (require 'init-go)
+(require 'init-typescript)
 
 ;;;; Build tools
 (require 'init-build)
