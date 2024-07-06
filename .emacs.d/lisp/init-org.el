@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
+(install-pkgs org-tidy)
 (defun position-link ()
   (interactive)
   (kill-new
@@ -9,6 +10,7 @@
            (symbol-at-point))))
 
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
+      org-return-follows-link t
       org-src-fontify-natively t
       org-src-tab-acts-natively t
       org-confirm-babel-evaluate nil
@@ -24,6 +26,7 @@
 
   (add-hook 'org-mode-hook (lambda ()
                              (add-hook 'after-save-hook 'tangle-in-org)))
+  (add-hook 'org-mode-hook #'org-tidy-mode)
   (require 'org-tempo)
   (global-set-key (kbd "C-c s") #'org-store-link)
   (global-set-key (kbd "C-c l") #'org-insert-last-stored-link)
