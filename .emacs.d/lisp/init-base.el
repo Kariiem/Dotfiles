@@ -79,5 +79,5 @@
 
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
+(install-pkgs tmr)
 (provide 'init-base)

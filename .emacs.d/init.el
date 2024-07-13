@@ -139,6 +139,7 @@
 (require 'init-raku)
 (require 'init-go)
 (require 'init-typescript)
+(require 'init-julia)
 
 ;;;; Build tools
 (require 'init-build)
