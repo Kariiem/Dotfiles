@@ -83,8 +83,8 @@
     (apply #'message m)))
 
 (generate&load-directory-autoloads (expand-file-name "minor-modes"
-                                                user-emacs-directory)
-                                   "autoload-minor-modes.el")
+                                                     user-emacs-directory)
+                                   "autoload-minor-modes.el" t)
 
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
@@ -140,7 +140,7 @@
 (require 'init-go)
 (require 'init-typescript)
 (require 'init-julia)
-
+(require 'init-z3)
 ;;;; Build tools
 (require 'init-build)
 ;; init.el ends here

@@ -1,6 +1,8 @@
 ;; -*- lexical-binding: t -*-
 (install-pkgs magit)
 
+(setq magit-define-global-key-bindings 'recommended)
+
 (with-eval-after-load 'magit
   (setq magit-log-margin '(t "%Y-%m-%d %R" magit-log-margin-width t 18))
 
