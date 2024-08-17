@@ -10,6 +10,12 @@
       recentf-max-menu-items 1000
       recentf-max-saved-items 1000
       recentf-auto-cleanup 'never
+      display-line-numbers-type 'relative
+      isearch-lazy-count t
+      isearch-lazy-highlight t
+      lazy-count-prefix-format nil
+      lazy-count-suffix-format "[%s of %s]"
+      ibuffer-expert t
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
                               missing-newline-at-eof)
@@ -52,6 +58,7 @@
                               #'vertico--metadata-get :override 'recentf-fix-category)
                              (call-interactively 'recentf))
                     (advice-remove #'vertico--metadata-get 'recentf-fix-category))))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 
 (set-face-attribute 'default nil :font my-font)
