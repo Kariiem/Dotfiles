@@ -9,3 +9,4 @@
 !minor-modes/
 !minor-modes/*
 !.gitignore
+minor-modes/autoload-minor-modes.el

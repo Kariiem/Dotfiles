@@ -8,6 +8,7 @@
 
 
 
+;;; Sections
 (defconst hinfo--section-regex
   (rx (+ "-")
       (char "\n")
@@ -18,13 +19,13 @@
 (defvar-local hinfo--sections nil)
 
 (defun hinfo--section-start (name)
-  (alist-get name hinfo--sections nil nil #'equal))
+  (cdr (assoc name hinfo--sections)))
 
 (defun hinfo--populate-sections ()
-  (beginning-of-buffer)
   (save-excursion
+    (beginning-of-buffer)
     (while (re-search-forward hinfo--section-regex nil t)
-      (push `(,(match-string 1) . ,(match-beginning 1))
+      (push `(,(match-string-no-properties 1) . ,(match-beginning 1))
             hinfo--sections)))
   hinfo--sections)
 
@@ -63,6 +64,7 @@
 
 
 
+;;; States
 (defconst hinfo--state-regex
   (rx bol (group "State" (+ space) (group (+ digit)) eol)))
 
@@ -71,7 +73,7 @@
 (defvar-local hinfo--states-count 0)
 
 (defun hinfo--state-start (n)
-  (alist-get n hinfo--states nil nil #'equal))
+  (cdr (assoc n hinfo--states)))
 
 (defun hinfo--populate-states ()
   (save-excursion
@@ -79,7 +81,7 @@
     ;;;(goto-char (hinfo--section-start "States"))
     (let ((search-end (cdr (hinfo--next-section 1))))
       (while (re-search-forward hinfo--state-regex search-end t)
-        (push `(,(string-to-number (match-string 2)) . ,(match-beginning 1))
+        (push `(,(string-to-number (match-string-no-properties 2)) . ,(match-beginning 1))
               hinfo--states))))
   (setq hinfo--states-count (length hinfo--states))
   hinfo--states)
@@ -116,6 +118,7 @@
   (recenter 1))
 
 
+;;;Rules
 (defconst hinfo--rule-regex
   (rx (group (+ (in ?% ?_ alpha digit)))
       (+ space)
@@ -129,7 +132,7 @@
 (defvar-local hinfo--rules nil)
 
 (defun hinfo--rule-start (n)
-  (car (alist-get n hinfo--rules nil nil #'equal)))
+  (cadr (assoc n hinfo--rules)))
 
 (defun hinfo--populate-rules ()
   (save-excursion
@@ -137,9 +140,9 @@
     ;;;(goto-char (hinfo--section-start "Grammar"))
     (let ((search-end (cdr (hinfo--next-section 1))))
       (while (re-search-forward hinfo--rule-regex search-end t)
-        (push `(,(string-to-number (match-string 2)) ,(match-beginning 1) ,(match-string 1))
-              hinfo--rules)))
-    hinfo--rules))
+        (push `(,(string-to-number (match-string-no-properties 2)) ,(match-beginning 1) ,(match-string-no-properties 1))
+              hinfo--rules))))
+  hinfo--rules)
 
 ;;; exported functions
 (defun hinfo-goto-rule (n)
@@ -148,16 +151,20 @@
   (recenter 1))
 
 
+;;;NonTerminals
 (defconst hinfo--nonterminal-regex
   (rx (group (+ (in alnum ?% ?_)))
-      (+ space)
-      "rules"
-      (group (: (+ (+ space) (+ numeric))))))
+      (+ blank)
+      "rule"
+      (opt ?s)
+      (+ blank)
+      (group (+ (+ numeric) (opt ?, blank)))
+      eol))
 
 (defvar-local hinfo--nonterminals nil)
 
 (defun hinfo--nonterminal-start (name)
-  (alist-get name hinfo--nonterminals nil nil #'equal))
+  (cdr (assoc name hinfo--nonterminals)))
 
 (defun hinfo--populate-nonterminals ()
   (save-excursion
@@ -165,9 +172,9 @@
     ;;;(goto-char (hinfo--section-start "Non-terminals"))
     (let ((search-end (cdr (hinfo--next-section 1))))
       (while (re-search-forward hinfo--nonterminal-regex search-end t)
-        (push `(,(match-string 1) . ,(match-beginning 1))
-              hinfo--nonterminals)))
-    hinfo--nonterminals))
+        (push `(,(match-string-no-properties 1) . ,(match-beginning 1))
+              hinfo--nonterminals))))
+  hinfo--nonterminals)
 
 ;;; exported functions
 (defun hinfo-goto-nonterminal (name)
@@ -176,39 +183,71 @@
   (recenter 1))
 
 
+;;;Terminals
 (defconst hinfo--terminal-regex
   (rx (group (| (: ?' (+ (not ?')) ?')
-                (+ (in alpha ?_))))
-      (+ space)
-      ?{))
+                (+ (in alnum ?_))))
+      (* space)
+      "{ L _ "
+      (* (not alpha))
+      (group (+ (in alnum ?_)))))
 
 (defvar-local hinfo--terminals nil)
 
 (defun hinfo--terminal-start (name)
-  (alist-get name hinfo--terminals nil nil #'equal))
+  (cadr (assoc name hinfo--terminals)))
 
 (defun hinfo--populate-terminals ()
   (save-excursion
     (hinfo-goto-section "Terminals")
     ;;;(goto-char (hinfo--section-start "Terminals"))
-    (let ((search-end (cdr (hinfo--next-section 1))))
+    (let ((search-end (cdr (hinfo--next-section 1)))
+          (terminal-id 2))
+      (push `(0 ,(hinfo--section-start "Terminals") "error" "ERROR") hinfo--terminals)
+      (push `(1 ,(hinfo--section-start "Terminals") "catch" "CATCH") hinfo--terminals)
       (while (re-search-forward hinfo--terminal-regex search-end t)
-        (push `(,(match-string 1) . ,(match-beginning 1))
-              hinfo--terminals)))
-    hinfo--terminals))
+        (push `(,terminal-id
+                ,(match-beginning 1)
+                ,(match-string-no-properties 2)
+                ,(match-string-no-properties 1))
+              hinfo--terminals)
+        (cl-incf terminal-id))
+      (push `(,terminal-id ,search-end "eof" "EOF") hinfo--terminals)))
+  hinfo--terminals)
 
 ;;; exported functions
 (defun hinfo-goto-terminal (name)
-  (interactive (list (completing-read "Terminal: " hinfo--terminals)))
-  (goto-char (hinfo--terminal-start name))
+  (interactive (list
+                (let ((completion-styles '(basic substring)))
+                  (completing-read "Terminal: "
+                                 (mapcar (lambda (t)
+                                           (format "%-3d - %-30s { %s }"
+                                                   (car t)
+                                                   (cadddr t)
+                                                   (caddr t)))
+                                         hinfo--terminals)
+                                 nil
+                                 t))))
+  (string-match (rx (group bow (+ digit)) (+ space) ?-) name)
+  (goto-char (hinfo--terminal-start (string-to-number (match-string-no-properties 1 name))))
   (recenter 1))
 
 
-
+;;;Major Mode
 (defconst hinfo-keywords
-  '("State" "rule" "shift" "reduce" "goto"))
+  '("State" "state" "rule" "rules" "shift" "reduce" "goto"))
 
-(defconst hinfo-font-lock-keywords nil)
+(defun hinfo-font-lock-keywords ()
+  (list
+   `(,(regexp-opt (mapcar #'caddr hinfo--terminals) 'symbols) . font-lock-string-face)
+   `(,(regexp-opt (mapcar #'car hinfo--sections) 'symbols) . font-lock-type-face)
+   `(,(regexp-opt (mapcar #'car hinfo--nonterminals) 'symbols) . font-lock-keyword-face)
+   `(,(regexp-opt hinfo-keywords 'symbols) . font-lock-preprocessor-face)))
+
+(defvar hinfo-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?' "\"" table)
+    table))
 
 ;;;###autoload
 (defvar-keymap hinfo-mode-map
@@ -217,18 +256,32 @@
   "N"   #'hinfo-goto-next-state
   "P"   #'hinfo-goto-prev-state
   "S"   #'hinfo-goto-section
+  "T"   #'hinfo-goto-nonterminal
   "t"   #'hinfo-goto-terminal
   "r"   #'hinfo-goto-rule
   "s"   #'hinfo-goto-state)
 
+(defun hinfo--setup-data ()
+  (when (equal major-mode 'hinfo-mode)
+    (setq hinfo--sections nil
+          hinfo--rules nil
+          hinfo--nonterminals nil
+          hinfo--terminals nil
+          hinfo--states nil)
+    (hinfo--populate-sections)
+    (hinfo--populate-rules)
+    (hinfo--populate-nonterminals)
+    (hinfo--populate-terminals)
+    (hinfo--populate-states)
+    (read-only-mode 1)))
+
 ;;;###autoload
 (define-derived-mode hinfo-mode prog-mode "hinfo"
   "Major mode for Happy generated info files"
-  (hinfo--populate-sections)
-  (hinfo--populate-rules)
-  (hinfo--populate-terminals)
-  (hinfo--populate-states)
-  (read-only-mode 1))
+  :syntax-table hinfo-mode-syntax-table
+  (hinfo--setup-data)
+  (setq-local font-lock-defaults '(hinfo-font-lock-keywords))
+  (add-hook 'after-save-hook #'hinfo--setup-data))
 
 (defvar hinfo-mode-hook nil)
 ;;;###autoload
