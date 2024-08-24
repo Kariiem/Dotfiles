@@ -281,7 +281,8 @@
   :syntax-table hinfo-mode-syntax-table
   (hinfo--setup-data)
   (setq-local font-lock-defaults '(hinfo-font-lock-keywords))
-  (add-hook 'after-save-hook #'hinfo--setup-data))
+  (add-hook 'after-save-hook #'hinfo--setup-data)
+  (add-hook 'after-revert-hook #'hinfo--setup-data))
 
 (defvar hinfo-mode-hook nil)
 ;;;###autoload

@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t -*-
 (install-pkgs gruber-darker-theme
-              solarized-theme
               dracula-theme
+              ef-themes
               modus-themes)
 
 (advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))

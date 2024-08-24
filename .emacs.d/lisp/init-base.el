@@ -16,6 +16,8 @@
       lazy-count-prefix-format nil
       lazy-count-suffix-format "[%s of %s]"
       ibuffer-expert t
+      tags-case-fold-search nil
+      tags-revert-without-query t
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
                               missing-newline-at-eof)
