@@ -10,6 +10,7 @@
 
 ;;; Sections
 (defconst hinfo--section-regex
+
   (rx (+ "-")
       (char "\n")
       (group (: (+ alpha) (| (? ?-) (? space)) (+ alpha)))
@@ -249,17 +250,22 @@
     (modify-syntax-entry ?' "\"" table)
     table))
 
+(defun hinfo-revert ()
+  "Revert/Re-read grammer *.hinfo file"
+  (interactive)
+  (revert-buffer t t))
 ;;;###autoload
 (defvar-keymap hinfo-mode-map
-  "M-n" #'hinfo-goto-next-section
-  "M-p" #'hinfo-goto-prev-section
-  "N"   #'hinfo-goto-next-state
-  "P"   #'hinfo-goto-prev-state
-  "S"   #'hinfo-goto-section
-  "T"   #'hinfo-goto-nonterminal
-  "t"   #'hinfo-goto-terminal
-  "r"   #'hinfo-goto-rule
-  "s"   #'hinfo-goto-state)
+  "N" #'hinfo-goto-next-section
+  "P" #'hinfo-goto-prev-section
+  "n" #'hinfo-goto-next-state
+  "p" #'hinfo-goto-prev-state
+  "S" #'hinfo-goto-section
+  "T" #'hinfo-goto-nonterminal
+  "t" #'hinfo-goto-terminal
+  "r" #'hinfo-goto-rule
+  "s" #'hinfo-goto-state
+  "g" #'hinfo-revert)
 
 (defun hinfo--setup-data ()
   (when (equal major-mode 'hinfo-mode)
