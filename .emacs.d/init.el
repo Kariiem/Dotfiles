@@ -141,6 +141,7 @@
 (require 'init-typescript)
 (require 'init-julia)
 (require 'init-z3)
+(require 'init-elm)
 ;;;; Build tools
 (require 'init-build)
 ;; init.el ends here
