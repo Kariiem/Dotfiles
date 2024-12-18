@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
-(install-pkgs flycheck-popup-tip)
+(install-pkgs flycheck-popup-tip
+              tmr)
 
 (setq inhibit-splash-screen t
       make-backup-files nil
@@ -19,7 +20,10 @@
       ibuffer-expert t
       tags-case-fold-search nil
       tags-revert-without-query t
+      flycheck-highlighting-mode 'lines
+      flycheck-highlighting-style '(conditional 4 level-face (delimiters #1="" #1#))
       flycheck-check-syntax-automatically '(save mode-enabled)
+      flycheck-indication-mode 'left-margin
       flycheck-display-errors-delay 0.1
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
@@ -93,5 +97,12 @@
   (flycheck-popup-tip-mode))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(install-pkgs tmr)
+(add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+               (display-buffer-reuse-window display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.33)))
+
 (provide 'init-base)
