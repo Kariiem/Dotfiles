@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+(install-pkgs flycheck-popup-tip)
 
 (setq inhibit-splash-screen t
       make-backup-files nil
@@ -18,6 +19,8 @@
       ibuffer-expert t
       tags-case-fold-search nil
       tags-revert-without-query t
+      flycheck-check-syntax-automatically '(save mode-enabled)
+      flycheck-display-errors-delay 0.1
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
                               missing-newline-at-eof)
@@ -86,6 +89,8 @@
   (add-to-list 'Info-directory-list
                (expand-file-name "info" user-emacs-directory)))
 
+(with-eval-after-load 'flycheck
+  (flycheck-popup-tip-mode))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (install-pkgs tmr)

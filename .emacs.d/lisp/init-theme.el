@@ -2,7 +2,15 @@
 (install-pkgs gruber-darker-theme
               dracula-theme
               ef-themes
-              modus-themes)
+              modus-themes
+              ;; doom themes
+              doom-themes
+              ;; vscode themes
+              vs-dark-theme
+              vs-light-theme
+              vs-code-theme
+              vscode-dark-plus-theme
+              fantom-theme)
 
 (advice-add #'load-theme :before (lambda (&rest r) (mapc 'disable-theme custom-enabled-themes)))
 
