@@ -2,7 +2,8 @@
 
 (install-pkgs multiple-cursors)
 
-(setq kill-whole-line t)
+(setq kill-whole-line t
+      mc/always-run-for-all t)
 (delete-selection-mode 1)
 (global-auto-revert-mode 1)
 

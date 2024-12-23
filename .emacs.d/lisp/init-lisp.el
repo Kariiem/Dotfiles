@@ -8,4 +8,5 @@
 ;; (add-hook 'minibuffer-setup-hook 'conditionally-enable-lispy)
 (install-pkgs paredit)
 (paredit-mode)
+(setq inferior-lisp-program "sbcl")
 (provide 'init-lisp)
