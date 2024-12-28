@@ -55,7 +55,7 @@
 (defun todowords--generate-regexps ()
   (mapcar (lambda (word)
             (let* ((w (car word)))
-              (format "\\<\\(%s\\)" w)))
+              (format "\\<\\(%s\\)\\>" w)))
             todowords-words))
 
 (defun todowords--generate-pairs ()
