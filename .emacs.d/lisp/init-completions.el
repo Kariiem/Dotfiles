@@ -3,7 +3,9 @@
 (install-pkgs vertico
               yasnippet
               yasnippet-snippets
-              company)
+              company
+              imenu-anywhere
+              imenu-list)
 
 (add-hook 'prog-mode-hook 'company-mode)
 (with-eval-after-load 'company
@@ -37,5 +39,8 @@
       company-minimum-prefix-length 3)
 
 (vertico-mode)
+(imenu-list-minor-mode)
+(global-set-key (kbd "M-g a") 'imenu-anywhere)
+(global-set-key (kbd "M-g l") 'imenu-list)
 
 (provide 'init-completions)

@@ -4,6 +4,11 @@
               tide
               web-mode)
 
+(defun my-json-conf()
+  (setq-local js-indent-level 2))
+
+(add-hook 'json-mode-hook #'my-json-conf)
+
 (require 'flycheck)
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 
