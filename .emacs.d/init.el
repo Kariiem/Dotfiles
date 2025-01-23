@@ -113,6 +113,7 @@
 (require 'init-matrix)
 (require 'init-eww)
 (require 'init-zen)
+(require 'init-hledger)
 
 ;;;; Languages
 ;; General settings
