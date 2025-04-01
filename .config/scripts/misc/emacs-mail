@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec emacs --eval "(progn (global-display-line-numbers-mode -1) (load-theme 'modus-operandi-deuteranopia t) (notmuch))"
