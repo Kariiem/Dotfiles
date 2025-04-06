@@ -107,6 +107,7 @@
 (require 'init-dbg)
 (require 'init-email)
 (require 'init-pdf)
+(require 'init-epub)
 (require 'init-compile)
 (require 'init-irc)
 (require 'init-ement)
@@ -114,7 +115,7 @@
 (require 'init-eww)
 (require 'init-zen)
 (require 'init-hledger)
-
+(require 'init-translate)
 ;;;; Languages
 ;; General settings
 (with-eval-after-load 'prog-mode
@@ -143,6 +144,7 @@
 (require 'init-julia)
 (require 'init-z3)
 (require 'init-elm)
+(require 'init-elixir)
 ;;;; Build tools
 (require 'init-build)
 ;; init.el ends here

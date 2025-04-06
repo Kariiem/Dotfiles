@@ -25,11 +25,18 @@
       flycheck-check-syntax-automatically '(save mode-enabled)
       flycheck-indication-mode 'left-margin
       flycheck-display-errors-delay 0.1
+      gdb-many-windows t
+      gdb-default-window-configuration-file "gdbui"
+      desktop-save t
+      speedbar-show-unknown-files t
+      speedbar-default-position 'left
+      ;; #x2551 = ║, #x2501 = │
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
                               missing-newline-at-eof)
       my-font (font-spec :family "JetBrains Mono"
                          :size 16
+                         ;;:width 'normal
                          :weight 'normal
                          :slant 'normal))
 
@@ -51,6 +58,7 @@
 (setq-default create-lockfiles nil
               fill-column 80
               tab-width 8
+              display-fill-column-indicator-character #x2551
               indent-tabs-mode nil)
 
 (defun recentf-fix-category (prop)
@@ -71,6 +79,8 @@
 
 
 (set-face-attribute 'default nil :font my-font)
+(set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
+;;(set-frame-font my-font nil t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -78,12 +88,14 @@
 
 ;;(amx-mode 1)
 (savehist-mode 1)
-(recentf-mode 1)
+;;(recentf-mode 1)
 (column-number-mode 1)
 (whitespace-mode 1)
 (show-paren-mode 1)
 (which-function-mode 1)
+;;(desktop-save-mode 1)
 (global-display-line-numbers-mode 1)
+(global-display-fill-column-indicator-mode 1)
 (global-hl-line-mode 1)
 
 (global-nomouse-mode 1)

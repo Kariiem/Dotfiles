@@ -13,7 +13,7 @@
 
 (defmacro install-pkgs (one &rest pkgs)
   `(let ((pkgs (cons ',one ',pkgs)))
-     (mapcar #'maybe-install-package pkgs)))
+     (mapc #'maybe-install-package pkgs)))
 
 (setq package-enable-at-startup nil
       package-install-upgrade-built-in t

@@ -23,15 +23,22 @@
 (setq windmove-wrap-around t)
 (windmove-default-keybindings)
 
-(defun toggle-dedicate-window ()
-  (interactive)
-  (if (not (window-dedicated-p (selected-window)))
-      (progn (set-window-dedicated-p (selected-window) t)
-             (message "window dedicated."))
-    (set-window-dedicated-p (selected-window) nil)
-    (message "window un-dedicated")))
+(defun toggle-window-freeze (&optional window interactive)
+  (interactive "i\np")
+  (setq window (window-normalize-window window))
+  (set-window-dedicated-p window (not (window-dedicated-p window)))
+  (with-current-buffer (window-buffer window)
+    (setq window-size-fixed (and (window-dedicated-p window) 'width)))
+  (when interactive
+    (message "Window is %s frozen to buffer %s"
+             (let ((status (window-dedicated-p window)))
+               (cond
+                ((null status) "no longer")
+                (t "now")))
+             (current-buffer))
+    (force-mode-line-update)))
 
 (global-set-key (kbd "C-c w") window-ctrl)
-(global-set-key (kbd "C-x 9") 'toggle-dedicate-window)
+(global-set-key (kbd "C-x 9") 'toggle-window-freeze)
 
 (provide 'init-window)

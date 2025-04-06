@@ -1,6 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
-(setq read-only-dirs '("~/git/bsd-user"))
+(setq read-only-dirs '("~/git/bsd-user")
+      dired-dwim-target t
+      dired-listing-switches "-ADlh --sort=time \"--time-style=+%d/%m/%Y %H:%M\" --group-directories-first --file-type")
 
 (defun string-prefix-in-list (dir-list fname)
   (cl-some (lambda (dir) (string-prefix-p dir fname))
@@ -18,8 +20,8 @@
 
 (add-hook 'prog-mode-hook 'set-read-only)
 (add-hook 'dired-mode-hook (lambda ()
-                             (dired-hide-details-mode 1)
-                             (dired-omit-mode 1)
+                             (dired-hide-details-mode -1)
+                             (dired-omit-mode -1)
                              (visual-line-mode 1)))
 
 (setq dired-kill-when-opening-new-dired-buffer t)

@@ -18,7 +18,7 @@
   (setq vertico-cycle t
         completion-styles '(basic substring partial-completion emacs22)
         vertico-resize nil
-        vertico-preselect 'first)
+        vertico-preselect 'no-prompt)
   (keymap-set vertico-map "RET" #'vertico-directory-enter)
   (keymap-set vertico-map "DEL" #'vertico-directory-delete-char)
   (keymap-set vertico-map "M-DEL" #'vertico-directory-delete-word)
@@ -39,7 +39,6 @@
       company-minimum-prefix-length 3)
 
 (vertico-mode)
-(imenu-list-minor-mode)
 (global-set-key (kbd "M-g a") 'imenu-anywhere)
 (global-set-key (kbd "M-g l") 'imenu-list)
 

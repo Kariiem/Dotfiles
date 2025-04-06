@@ -6,7 +6,8 @@
 ;;   (when (eq this-command 'eval-expression)
 ;;     (lispy-mode 1)))
 ;; (add-hook 'minibuffer-setup-hook 'conditionally-enable-lispy)
-(install-pkgs paredit)
+(install-pkgs paredit
+              slime)
 (paredit-mode)
 (setq inferior-lisp-program "sbcl")
 (provide 'init-lisp)
