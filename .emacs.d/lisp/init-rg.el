@@ -1,7 +1,9 @@
 ;; -*- lexical-binding: t -*-
 
 (install-pkgs rg)
-(rg-enable-default-bindings)
+
+
+(add-hook 'after-init-hook #'rg-enable-default-bindings)
 
 (with-eval-after-load 'rg
   (setq transient-default-level 7))

@@ -4,6 +4,7 @@
 
 (setq inhibit-splash-screen t
       make-backup-files nil
+      backup-by-copying-when-linked t
       scroll-conservatively 101
       frame-inhibit-implied-resize t
       text-scale-mode-step (expt 2 (/ 1.0 4.0))
@@ -13,6 +14,7 @@
       recentf-max-saved-items 1000
       recentf-auto-cleanup 'never
       display-line-numbers-type 'relative
+      imenu-max-item-length nil
       isearch-lazy-count t
       isearch-lazy-highlight t
       lazy-count-prefix-format nil
@@ -28,6 +30,7 @@
       gdb-many-windows t
       gdb-default-window-configuration-file "gdbui"
       desktop-save t
+      project-vc-extra-root-markers '(".project" ".projectile" )
       speedbar-show-unknown-files t
       speedbar-default-position 'left
       ;; #x2551 = ║, #x2501 = │
@@ -67,6 +70,10 @@
         'file
       nil)))
 
+(defun insert-date ()
+  (interactive)
+  (insert (current-time-string)))
+
 (global-set-key (kbd "C-x C-r")
                 (lambda ()
                   (interactive)
@@ -76,7 +83,6 @@
                              (call-interactively 'recentf))
                     (advice-remove #'vertico--metadata-get 'recentf-fix-category))))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
 
 (set-face-attribute 'default nil :font my-font)
 (set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
@@ -88,6 +94,7 @@
 
 ;;(amx-mode 1)
 (savehist-mode 1)
+(etags-regen-mode)
 ;;(recentf-mode 1)
 (column-number-mode 1)
 (whitespace-mode 1)
@@ -95,7 +102,7 @@
 (which-function-mode 1)
 ;;(desktop-save-mode 1)
 (global-display-line-numbers-mode 1)
-(global-display-fill-column-indicator-mode 1)
+;; (global-display-fill-column-indicator-mode 1)
 (global-hl-line-mode 1)
 
 (global-nomouse-mode 1)
@@ -116,5 +123,25 @@
                (side            . bottom)
                (reusable-frames . visible)
                (window-height   . 0.33)))
+
+
+(defun split-window-1/n (&optional size window-to-split)
+  (interactive `(,(when current-prefix-arg
+                    (prefix-numeric-value current-prefix-arg))
+                 ,(selected-window)))
+  (let (new-window)
+    (when (and size (< size 0) (< (- size) window-min-width))
+      ;; `split-window' would not signal an error here.
+      (error "Size of new window too small"))
+    (setq new-window (split-window window-to-split
+                                   (and size (- (window-width) (/ (window-width) size)))
+                                   t))
+    ;; Always copy quit-restore parameter in interactive use.
+    (let ((quit-restore (window-parameter window-to-split 'quit-restore)))
+      (when quit-restore
+	(set-window-parameter new-window 'quit-restore quit-restore)))
+    new-window))
+
+(global-set-key (kbd "C-x 3") #'split-window-1/n)
 
 (provide 'init-base)

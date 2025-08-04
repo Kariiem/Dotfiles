@@ -36,7 +36,13 @@
       company-selection-wrap-around t
       company-dabbrev-downcase 0
       company-idle-delay 0
-      company-minimum-prefix-length 3)
+      company-minimum-prefix-length 3
+      completion-ignore-case t
+      read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      imenu-case-fold-search 0
+      imenu-max-index-time 99999999999999
+      imenu-auto-rescan t)
 
 (vertico-mode)
 (global-set-key (kbd "M-g a") 'imenu-anywhere)

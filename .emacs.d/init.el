@@ -19,26 +19,55 @@
 ;; src: https://github.com/jwiegley/dot-emacs/blob/master/init.org#report-time-spent-loading-this-module
 (defconst emacs-start-time (current-time))
 
+(defvar require-stats '())
+(defun timed-require (feature &optional filename noerror)
+  (let* ((tic (current-time))
+         (f   (require feature filename noerror))
+         (toc (current-time)))
+    (push (cons f (float-time (time-subtract toc tic)))
+          require-stats)))
+
+
 (defun report-time-since-load (&optional suffix)
-  (message "Loading init...done (%.3fs)%s"
+  (message "Loading init...done (%.3fs)%s with %d garbage collections"
            (float-time (time-subtract (current-time) emacs-start-time))
-           suffix))
+           suffix
+           gcs-done))
 
 (add-hook 'after-init-hook
           (lambda ()
-            (report-time-since-load " [after-init]")
-            (condition-case nil (call-interactively 'load-theme)
-              (error nil)
-              ('quit nil)))
+            (let ((inhibit-message t))
+              (dolist (item (sort require-stats :key 'cdr))
+                (message "require %-20s took %.3fs" (car item) (cdr item)))
+              (report-time-since-load " [after-init]")))
           t)
 
+(fringe-mode 0)
+
+(add-hook 'whitespace-mode-hook
+          (lambda () (set-face-attribute 'whitespace-space nil
+                                         :foreground "LavenderBlush4"
+                                         :background nil)))
+
+(defun light-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "black"
+                      :background "white"))
+
+(defun dark-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#f8f8f2"
+                      :background "#0a2a2f"))
+
+(dark-emacs)
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
-
-(let ((normal-gc-cons-threshold (* 20 1024 1024)) ;; 20 mb
+(let ((normal-gc-cons-threshold (* 128 1024 1024)) ;; 128 mb
       (init-gc-cons-threshold most-positive-fixnum))
   (setq gc-cons-threshold init-gc-cons-threshold
-        gc-cons-percentage 0.6)
+        gc-cons-percentage 0.8)
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold
                              gc-cons-percentage 0.1))))
@@ -86,65 +115,73 @@
                                                      user-emacs-directory)
                                    "autoload-minor-modes.el" t)
 
+
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
-(require 'init-package)
-(require 'init-base)
-(require 'init-theme)
-(require 'init-misc)
-(require 'init-window)
-(require 'init-edit)
-(require 'init-dired)
-(require 'init-completions)
-(require 'init-compile)
+
+(timed-require 'init-package)
+(timed-require 'init-base)
+(timed-require 'init-theme)
+(timed-require 'init-misc)
+(timed-require 'init-window)
+(timed-require 'init-edit)
+(timed-require 'init-dired)
+(timed-require 'init-completions)
+(timed-require 'init-compile)
+
 ;;(require 'init-evil)
 ;;(require 'init-keychords)
 
 ;;;; Tools
-(require 'init-magit)
-(require 'init-tramp)
-(require 'init-rg)
-(require 'init-dbg)
-(require 'init-email)
-(require 'init-pdf)
-(require 'init-epub)
-(require 'init-compile)
-(require 'init-irc)
-(require 'init-ement)
-(require 'init-matrix)
-(require 'init-eww)
-(require 'init-zen)
-(require 'init-hledger)
-(require 'init-translate)
+(timed-require 'init-magit)
+(timed-require 'init-tramp)
+(timed-require 'init-rg)
+(timed-require 'init-dbg)
+(timed-require 'init-email)
+(timed-require 'init-pdf)
+(timed-require 'init-epub)
+(timed-require 'init-compile)
+(timed-require 'init-irc)
+(timed-require 'init-ement)
+(timed-require 'init-matrix)
+(timed-require 'init-eww)
+(timed-require 'init-zen)
+(timed-require 'init-hledger)
+(timed-require 'init-translate)
+(timed-require 'init-eglot)
 ;;;; Languages
 ;; General settings
 (with-eval-after-load 'prog-mode
   (electric-pair-mode 1))
-(require 'init-nix)
-(require 'init-org)
-(require 'init-md)
-(require 'init-gl)
-(require 'init-asm)
-(require 'init-c)
-(require 'init-rust)
-(require 'init-coq)
-(require 'init-haskell)
-(require 'init-ocaml)
-(require 'init-sml)
-(require 'init-fsharp)
-(require 'init-kotlin)
-(require 'init-scheme)
-(require 'init-lisp)
-(require 'init-python)
-(require 'init-ruby)
-(require 'init-lua)
-(require 'init-raku)
-(require 'init-go)
-(require 'init-typescript)
-(require 'init-julia)
-(require 'init-z3)
-(require 'init-elm)
-(require 'init-elixir)
+(timed-require 'init-nix)
+(timed-require 'init-org)
+(timed-require 'init-md)
+(timed-require 'init-gl)
+(timed-require 'init-asm)
+(timed-require 'init-c)
+(timed-require 'init-rust)
+(timed-require 'init-coq)
+(timed-require 'init-haskell)
+(timed-require 'init-ocaml)
+(timed-require 'init-sml)
+(timed-require 'init-fsharp)
+(timed-require 'init-kotlin)
+(timed-require 'init-scheme)
+(timed-require 'init-lisp)
+(timed-require 'init-python)
+(timed-require 'init-ruby)
+(timed-require 'init-lua)
+(timed-require 'init-raku)
+(timed-require 'init-go)
+(timed-require 'init-typescript)
+(timed-require 'init-julia)
+(timed-require 'init-z3)
+(timed-require 'init-elm)
+(timed-require 'init-elixir)
+(timed-require 'init-dart)
+(timed-require 'init-lean)
+(timed-require 'init-prolog)
 ;;;; Build tools
-(require 'init-build)
+(timed-require 'init-build)
+(timed-require 'init-tex)
 ;; init.el ends here

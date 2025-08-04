@@ -6,7 +6,7 @@
 (setq shr-use-fonts nil
       shr-use-colors nil
       shr-indentation 0
-      shr-table-horizontal-line nil
+      shr-table-horizontal-line ?\-
       shr-width 80
       shr-indentation 4
       shr-inhibit-images nil

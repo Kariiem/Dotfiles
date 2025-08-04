@@ -1,9 +1,11 @@
 ;; -*- lexical-binding: t -*-
-(install-pkgs magit)
+(install-pkgs magit
+              forge)
 
 (setq magit-define-global-key-bindings 'recommended)
 
 (with-eval-after-load 'magit
+  (require 'forge)
   (setq magit-log-margin '(t "%Y-%m-%d %R" magit-log-margin-width t 18))
 
   (transient-define-infix magit-commit:--reedit-message ()

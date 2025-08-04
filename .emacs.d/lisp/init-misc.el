@@ -1,9 +1,5 @@
 ;; -*- lexical-binding: t -*-
 
-(require 'repeat)
-(require 'auth-source-pass)
-(require 'bison-mode)
-(repeat-mode 1)
 ;; source: https://www.reddit.com/r/emacs/comments/vs4jqm/it_bears_repeating_emacs_28_repeat_mode/
 ;; https://www.emacswiki.org/emacs/Repeatable
 (defmacro repeat-command! (command)
@@ -23,7 +19,11 @@
 (setq Man-notify-method 'pushy
       Man-width 80)
 
-(auth-source-pass-enable)
+(with-eval-after-load 'emacs
+  (require 'repeat)
+  (repeat-mode 1)
+  (require 'auth-source-pass)
+  (auth-source-pass-enable))
 
 (custom-set-faces '(Info-quoted ((t (:foreground "orange" :slant italic :family "Jetbrains Mono")))))
 (setq delete-by-moving-to-trash t)

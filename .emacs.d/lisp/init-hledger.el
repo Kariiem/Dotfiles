@@ -2,31 +2,29 @@
 (install-pkgs hledger-mode
               flycheck-hledger)
 
-(require 'hledger-mode)
-
 (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
 
-(define-key hledger-mode-map (kbd "<kp-add>") 'hledger-increment-entry-date)
-(define-key hledger-mode-map (kbd "<kp-subtract>") 'hledger-decrement-entry-date)
-(define-key hledger-mode-map (kbd "M-p") 'hledger/prev-entry)
-(define-key hledger-mode-map (kbd "M-n") 'hledger/next-entry)
+(with-eval-after-load 'hledger
+  (global-set-key (kbd "C-c j") 'hledger-run-command)
+  (global-set-key (kbd "C-c e") 'hledger-jentry)
+  (define-key hledger-mode-map (kbd "<kp-add>") 'hledger-increment-entry-date)
+  (define-key hledger-mode-map (kbd "<kp-subtract>") 'hledger-decrement-entry-date)
+  (define-key hledger-mode-map (kbd "M-p") 'hledger/prev-entry)
+  (define-key hledger-mode-map (kbd "M-n") 'hledger/next-entry)
 
-;; Personal Accounting
-(global-set-key (kbd "C-c e") 'hledger-jentry)
-(global-set-key (kbd "C-c j") 'hledger-run-command)
-
+  ;; Personal Accounting
 ;;; src: README.md from https://github.com/narendraj9/hledger-mode
-(defun hledger/next-entry ()
-  "Move to next entry and pulse."
-  (interactive)
-  (hledger-next-or-new-entry)
-  (hledger-pulse-momentary-current-entry))
+  (defun hledger/next-entry ()
+    "Move to next entry and pulse."
+    (interactive)
+    (hledger-next-or-new-entry)
+    (hledger-pulse-momentary-current-entry))
 
-(defun hledger/prev-entry ()
-  "Move to last entry and pulse."
-  (interactive)
-  (hledger-backward-entry)
-  (hledger-pulse-momentary-current-entry))
+  (defun hledger/prev-entry ()
+    "Move to last entry and pulse."
+    (interactive)
+    (hledger-backward-entry)
+    (hledger-pulse-momentary-current-entry)))
 
 (add-hook 'hledger-view-mode-hook #'hl-line-mode)
 (add-hook 'hledger-mode-hook
