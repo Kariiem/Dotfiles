@@ -4,8 +4,6 @@
 
 (setq kill-whole-line t
       mc/always-run-for-all t)
-(delete-selection-mode 1)
-(global-auto-revert-mode 1)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)

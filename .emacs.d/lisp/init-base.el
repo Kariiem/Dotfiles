@@ -33,6 +33,7 @@
       project-vc-extra-root-markers '(".project" ".projectile" )
       speedbar-show-unknown-files t
       speedbar-default-position 'left
+      dired-mouse-drag-files t
       ;; #x2551 = ║, #x2501 = │
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
@@ -91,6 +92,9 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+(delete-selection-mode 1)
+(global-auto-revert-mode 1)
 
 ;;(amx-mode 1)
 (savehist-mode 1)
