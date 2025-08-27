@@ -33,6 +33,13 @@
   (define-key elixir-mode-map (kbd "C-c i l") 'inf-elixir-send-line)
   (define-key elixir-mode-map (kbd "C-c i r") 'inf-elixir-send-region)
   (define-key elixir-mode-map (kbd "C-c i b") 'inf-elixir-send-buffer)
-  (define-key elixir-mode-map (kbd "C-c i R") 'inf-elixir-reload-module))
+  (define-key elixir-mode-map (kbd "C-c i R") 'inf-elixir-reload-module)
+
+  ;; (define-key elixir-mode-map (kbd "C-M-f") 'elixir-end-of-defun)
+  ;; (define-key elixir-mode-map (kbd "C-M-b") 'elixir-beginning-of-defun)
+
+  (require 'eglot)
+  (add-to-list 'eglot-server-programs
+               '(elixir-mode "~/probe/elixir-ls-v0.29.2/language_server.sh")))
 
 (provide 'init-elixir)

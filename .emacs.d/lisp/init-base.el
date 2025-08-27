@@ -2,7 +2,9 @@
 (install-pkgs flycheck-popup-tip
               tmr)
 
-(setq inhibit-splash-screen t
+(setq ring-bell-function 'ignore
+      visible-bell nil
+      inhibit-splash-screen t
       make-backup-files nil
       backup-by-copying-when-linked t
       scroll-conservatively 101
@@ -109,7 +111,7 @@
 ;; (global-display-fill-column-indicator-mode 1)
 (global-hl-line-mode 1)
 
-(global-nomouse-mode 1)
+(global-nomouse-mode -1)
 (global-todowords-mode 1)
 
 (with-eval-after-load 'info

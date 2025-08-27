@@ -17,6 +17,7 @@
 ;; Measure startup time
 ;;(require 'init-benchmarking)
 ;; src: https://github.com/jwiegley/dot-emacs/blob/master/init.org#report-time-spent-loading-this-module
+
 (defconst emacs-start-time (current-time))
 
 (defvar require-stats '())
@@ -184,4 +185,8 @@
 ;;;; Build tools
 (timed-require 'init-build)
 (timed-require 'init-tex)
+;;;; Database
+(timed-require 'init-postgres)
+;;;; WebDev
+(timed-require 'init-rest)
 ;; init.el ends here

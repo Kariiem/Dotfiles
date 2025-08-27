@@ -1,5 +1,9 @@
 ;; -*- lexical-binding: t -*-
 
+(when (getenv "WSL_DISTRO_NAME")
+  (setq ls-lisp-use-insert-directory-program nil)
+  (require 'ls-lisp))
+
 (setq read-only-dirs '("~/git/bsd-user")
       dired-dwim-target t
       dired-listing-switches "-ADlh --sort=time \"--time-style=+%d/%m/%Y %H:%M\" --group-directories-first --file-type")
