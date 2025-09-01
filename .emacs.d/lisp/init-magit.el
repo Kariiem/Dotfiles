@@ -2,7 +2,8 @@
 (install-pkgs magit
               forge)
 
-(setq magit-define-global-key-bindings 'recommended)
+(setq magit-define-global-key-bindings 'recommended
+      magit-process-apply-ansi-colors t)
 
 (with-eval-after-load 'magit
   (require 'forge)
