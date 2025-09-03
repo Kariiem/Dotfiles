@@ -36,6 +36,10 @@
       speedbar-show-unknown-files t
       speedbar-default-position 'left
       dired-mouse-drag-files t
+      browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program  (if (getenv "WSL_DISTRO_NAME")
+                                      "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+                                    "chromium")
       ;; #x2551 = ║, #x2501 = │
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
@@ -98,6 +102,7 @@
 (delete-selection-mode 1)
 (global-auto-revert-mode 1)
 
+(pixel-scroll-precision-mode 1)
 ;;(amx-mode 1)
 (savehist-mode 1)
 (etags-regen-mode)

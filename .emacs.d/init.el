@@ -150,6 +150,7 @@
 (timed-require 'init-hledger)
 (timed-require 'init-translate)
 (timed-require 'init-eglot)
+(timed-require 'init-jira)
 ;;;; Languages
 ;; General settings
 (with-eval-after-load 'prog-mode
