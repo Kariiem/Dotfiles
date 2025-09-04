@@ -5,7 +5,7 @@
 !site/
 !site/*
 !lisp/
-!lisp/*
+!lisp/*.el
 !minor-modes/
 !minor-modes/*
 !.gitignore
