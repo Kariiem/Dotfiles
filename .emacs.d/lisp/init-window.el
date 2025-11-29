@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+(setq switch-to-buffer-in-dedicated-window 'pop
+      switch-to-buffer-obey-display-actions t)
+
 (defalias 'shrink-window-vertically 'shrink-window)
 (defalias 'enlarge-window-vertically 'enlarge-window)
 (define-prefix-command 'window-ctrl)

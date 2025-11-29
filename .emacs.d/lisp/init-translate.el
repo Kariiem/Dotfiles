@@ -1,6 +1,6 @@
-(install-pkgs go-translate)
+(install-pkgs gt)
 
-(with-eval-after-load 'go-translate
+(with-eval-after-load 'gt
   (setq gt-preset-translators
         `((ts-1 . ,(gt-translator
                     :taker (gt-taker :langs '(en ar) :text 'word)

@@ -43,4 +43,13 @@
   (transient-append-suffix 'magit-remote "a"
     '("l" "List all remotes" magit-remote-list-remotes)))
 
+(with-eval-after-load 'forge
+  (push '("git.sonnenbatterie.de"        ; GITHOST
+          "git.sonnenbatterie.de/api/v4" ; APIHOST
+          "git.sonnenbatterie.de"        ; WEBHOST and INSTANCE-ID
+          forge-gitlab-repository)       ; CLASS
+        forge-alist))
+
+
+
 (provide 'init-magit)

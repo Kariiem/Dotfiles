@@ -41,4 +41,6 @@ See `scroll-down-command' for details."
 (with-eval-after-load 'pdf-history
   (define-key pdf-history-minor-mode-map "N" nil))
 
+(add-hook 'pdf-outline-buffer-mode-hook (lambda () (display-line-numbers-mode -1)))
+
 (provide 'init-pdf)

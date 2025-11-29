@@ -1,11 +1,29 @@
 ;; -*- lexical-binding: t; -*-
 (install-pkgs flycheck-popup-tip
-              tmr)
+              kkp
+              tmr
+              clipetty)
+
+(when (not (display-graphic-p))
+  (defun uncoloured-emacs ()
+    (interactive)
+    (face-spec-set 'default nil 'reset)
+    (set-face-attribute 'default nil :foreground nil :background nil)
+    (set-face-attribute 'default t :foreground nil :background nil)
+    (set-face-attribute 'default (selected-frame) :foreground nil :background nil)
+    (mapc #'disable-theme custom-enabled-themes))
+
+  (xterm-mouse-mode)
+  (global-kkp-mode)
+  (global-clipetty-mode)
+  (setq mouse-wheel-progressive-speed nil
+        xterm-window-title-flag t))
 
 (setq ring-bell-function 'ignore
       visible-bell nil
       inhibit-splash-screen t
       make-backup-files nil
+      backup-inhibited t
       backup-by-copying-when-linked t
       scroll-conservatively 101
       frame-inhibit-implied-resize t
@@ -36,11 +54,12 @@
       speedbar-show-unknown-files t
       speedbar-default-position 'left
       dired-mouse-drag-files t
+      tab-bar-auto-width nil
+      ediff-window-setup-function 'ediff-setup-windows-plain
       browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program  (if (getenv "WSL_DISTRO_NAME")
-                                      "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
-                                    "chromium")
-      ;; #x2551 = ║, #x2501 = │
+      browse-url-generic-program  (or (and (getenv "WSL_DISTRO_NAME")
+                                           "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+                                      "chromium")
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
                               missing-newline-at-eof)
@@ -50,9 +69,14 @@
                          :weight 'normal
                          :slant 'normal))
 
+(setq select-active-regions nil
+      select-enable-clipboard t
+      select-enable-primary nil)
+
 ;;;; NOTE https://github.com/tarsius/hl-todo/blob/f1fef158f99a70746926ef52c59f4863a29b7ed7/hl-todo.el#L105C1-L121C28
 (setopt todowords-words '(("HOLD"   . "#d0bf8f")
                           ("TODO"   . "#229993")
+                          ("HINT"   . "#8845F3")
                           ("NEXT"   . "#dca3a3")
                           ("PROG"   . "#7cb8bb")
                           ("DONT"   . "#5f7f5f")
@@ -69,7 +93,8 @@
               fill-column 80
               tab-width 8
               display-fill-column-indicator-character #x2551
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              case-fold-search nil)
 
 (defun recentf-fix-category (prop)
   (unless (completion-metadata-get vertico--metadata prop)
@@ -154,5 +179,25 @@
     new-window))
 
 (global-set-key (kbd "C-x 3") #'split-window-1/n)
+
+;; so that I can copy the isearch highlighted text
+(keymap-set isearch-mode-map "M-w" (lambda ()
+                                     (interactive)
+                                     (let ((search-string (if isearch-regexp
+                                                              isearch-regexp
+                                                            isearch-string)))
+                                       (kill-new search-string)
+                                       (message "Copied: %s" search-string))))
+
+
+(add-to-list 'display-buffer-alist
+             '((or (major-mode . pdf-outline-buffer-mode)
+                   (major-mode . help-mode))
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (reusable-frames . visible)
+               (side . right)
+               (window-width . 0.25)))
+
 
 (provide 'init-base)

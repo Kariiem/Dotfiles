@@ -1,12 +1,12 @@
 ;; -*- lexical-binding: t -*-
 
 (when (getenv "WSL_DISTRO_NAME")
-  (setq ls-lisp-use-insert-directory-program nil)
-  (require 'ls-lisp))
+  (require 'ls-lisp)
+  (setq ls-lisp-use-insert-directory-program nil))
 
-(setq read-only-dirs '("~/git/bsd-user")
+(setq read-only-dirs '()
       dired-dwim-target t
-      dired-listing-switches "-ADlh --sort=time \"--time-style=+%d/%m/%Y %H:%M\" --group-directories-first --file-type")
+      dired-listing-switches "-ADlh --group-directories-first")
 
 (defun string-prefix-in-list (dir-list fname)
   (cl-some (lambda (dir) (string-prefix-p dir fname))

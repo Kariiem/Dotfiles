@@ -43,6 +43,14 @@
               (report-time-since-load " [after-init]")))
           t)
 
+
+(when (and (display-graphic-p) (getenv "WSL_DISTRO_NAME"))
+  (set-frame-parameter nil 'fullscreen 'maximized))
+
+(defun toggle-decorations ()
+  (interactive)
+  (set-frame-parameter nil 'undecorated (not (frame-parameter nil 'undecorated))))
+
 (fringe-mode 0)
 
 (add-hook 'whitespace-mode-hook
@@ -50,19 +58,38 @@
                                          :foreground "LavenderBlush4"
                                          :background nil)))
 
+(defun white-black-emacs ()
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (set-face-attribute 'default nil
+                      :foreground "black"
+                      :background "white")
+  (redraw-display))
+
 (defun light-emacs ()
   (interactive)
   (set-face-attribute 'default nil
                       :foreground "black"
                       :background "white"))
-
-(defun dark-emacs ()
+(defun green-emacs ()
   (interactive)
   (set-face-attribute 'default nil
                       :foreground "#f8f8f2"
                       :background "#0a2a2f"))
 
-(dark-emacs)
+(defun blue-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#f8f8f2"
+                      :background "#333344"))
+
+(defun dark-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#f8f8f2"
+                      :background "#292C31"))
+
+;; (dark-emacs)
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
 (let ((normal-gc-cons-threshold (* 128 1024 1024)) ;; 128 mb
@@ -134,6 +161,7 @@
 ;;(require 'init-keychords)
 
 ;;;; Tools
+(timed-require 'init-shell)
 (timed-require 'init-magit)
 (timed-require 'init-tramp)
 (timed-require 'init-rg)
@@ -191,3 +219,7 @@
 ;;;; WebDev
 (timed-require 'init-rest)
 ;; init.el ends here
+
+(install-pkgs pinentry)
+(setq epg-pinentry-mode 'loopback)
+(pinentry-start)
