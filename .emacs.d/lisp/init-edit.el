@@ -49,24 +49,65 @@
 
 (global-set-key (kbd "C-,") 'dup-line)
 
+(defface hidden-region-face
+  '((((class color) (min-colors 88) (background dark))
+     :background "slateblue4" :extend t)
+    (((class color) (min-colors 88) (background light))
+     :background "lightseagreen" :extend t)
+    (((class color) (min-colors 16) (background dark))
+     :background "lightblue" :extend t)
+    (((class color) (min-colors 16) (background light))
+     :background "light grey" :extend t)
+    (((class color) (min-colors 8))
+     :background "lightblue" :foreground "white" :extend t)
+    (((type tty) (class mono))
+     :inverse-video t)
+    (t :background "gray" :extend t))
+  "marked-as-hidden face.")
 
-(defvar hidden-regions nil
-  "list of hidden regions")
+(defvar hidden-region-text "{...}"
+  "marked-as-hidden display text")
 
-(defun hide-region ()
-  (interactive)
-  (when mark-active
-    (let ((beg (region-beginning))
-          (end (region-end)))
-      (put-text-property beg end 'invisible 'hidden)
-      (push (cons beg end) hidden-regions))))
+(defun hidden-region--toggle (o &optional hide-p)
+  "Toggle overlay `O' to between open/close.
+When HIDE-P is nil, open the overlay. When HIDE-P is t, close it."
+  (if hide-p
+      (progn
+        (overlay-put o 'invisible t)
+        (overlay-put o 'display hidden-region-text))
+    (overlay-put o 'invisible nil)
+    (overlay-put o 'display nil)))
 
-(defun unhide-last-region ()
-  (interactive)
-  (if hidden-regions
-      (let ((last-region (pop hidden-regions)))
-        (put-text-property (car last-region) (cdr last-region) 'invisible nil))
-    (error "No hidden regions found")))
+(defun hidden-region--open (o)
+  "Permanently open overlay O when isearch finds a match inside."
+  (hidden-region--toggle o nil))
 
+(defun hidden-region--create-overlay (beg end)
+  (let ((o (make-overlay beg end nil t nil)))
+    (overlay-put o 'type 'hide-region)
+    (overlay-put o 'invisible t)
+    (overlay-put o 'display hidden-region-text)
+    (overlay-put o 'face 'hidden-region-face)
+    (overlay-put o 'isearch-open-invisible           #'hidden-region--open)
+    (overlay-put o 'isearch-open-invisible-temporary #'hidden-region--toggle)
+    (overlay-put o 'keymap (define-keymap
+                             "<tab>" (lambda () (interactive) (hidden-region--toggle o (not (overlay-get o 'invisible))))
+                             "C-<tab>" (lambda () (interactive) (delete-overlay o))))
+    o))
+
+(defun hide-region (beg end)
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (if (bolp) (1- (region-end)) (region-end)))
+                 (list (point-min) (point-max))))
+  (deactivate-mark)
+  (hidden-region--create-overlay beg end)
+  (goto-char beg))
+
+(defun unhide-region (beg end)
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (mapc (lambda (o) (when (eq (overlay-get o 'type) 'hide-region) (delete-overlay o)))
+        (overlays-in beg end)))
 
 (provide 'init-edit)

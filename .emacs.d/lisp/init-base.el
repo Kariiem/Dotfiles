@@ -120,6 +120,16 @@
 (set-face-attribute 'default nil :font my-font)
 (set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
 ;;(set-frame-font my-font nil t)
+(fringe-mode (cons 8 0))
+(defun update-fringe-face ()
+  (set-face-attribute 'fringe nil
+                      :background (face-attribute 'default :background)))
+(update-fringe-face)
+(advice-add 'set-face-attribute :after
+            (lambda (face frame &rest args)
+              (when (eq face 'default)
+                (update-fringe-face))))
+
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -190,7 +200,32 @@
                                        (kill-new search-string)
                                        (message "Copied: %s" search-string))))
 
+(defvar isearch-skip-comments nil)
 
+(isearch-define-mode-toggle skip-comments ";" nil
+  "Toggle skipping comments and strings in isearch."
+  (setq isearch-skip-comments (not isearch-skip-comments))
+  (when isearch-lazy-count
+    (setq isearch-lazy-count-current nil
+          isearch-lazy-count-total nil)
+    (isearch-lazy-highlight-new-loop))
+  (isearch--momentary-message
+   (if isearch-skip-comments
+       "skip comments/strings on"
+     "skip comments/strings off")))
+
+(add-function :after-while (var isearch-filter-predicate)
+              (lambda (beg end)
+                (if isearch-skip-comments
+                    (let ((face (get-text-property beg 'face)))
+                      (when (not (listp face))
+                        (setq face (list face)))
+                      (not (or (memq 'font-lock-comment-face face)
+                               (memq 'font-lock-string-face face)
+                               (memq 'font-lock-doc-face face))))
+                  t)))
+
+;; window placement
 (add-to-list 'display-buffer-alist
              '((major-mode . pdf-outline-buffer-mode)
                (display-buffer-reuse-window
@@ -205,8 +240,17 @@
                 display-buffer-in-side-window)
                (reusable-frames . visible)
                (side . bottom)
+               (slot . 0)
                (window-height . 0.25)))
 
+;; the following ensures that after quitting transient window, the side window is not reused
+(defun my-reset-bottom-side-window ()
+  "Reset bottom side window after transient exits."
+  (when-let* ((bottom-win (window-with-parameter 'window-side 'bottom))
+              (buffer (window-buffer bottom-win)))
+    (delete-window bottom-win)
+    (display-buffer buffer)))
+(add-hook 'transient-exit-hook #'my-reset-bottom-side-window)
 
 (defun my/project-try-local (dir)
   "Check if DIR contains a .project file."
