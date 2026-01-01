@@ -35,7 +35,7 @@
       completion-auto-help nil
       company-selection-wrap-around t
       company-dabbrev-downcase 0
-      company-idle-delay 0
+      company-idle-delay 0.1
       company-minimum-prefix-length 3
       completion-ignore-case t
       read-file-name-completion-ignore-case t

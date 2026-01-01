@@ -89,6 +89,12 @@
                       :foreground "#f8f8f2"
                       :background "#292C31"))
 
+(defun black-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#f8f8f2"
+                      :background "#181818"))
+
 ;; (dark-emacs)
 
 ;; Adjust garbage collection thresholds during startup, and thereafter

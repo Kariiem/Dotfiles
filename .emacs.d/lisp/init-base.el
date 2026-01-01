@@ -56,6 +56,7 @@
       dired-mouse-drag-files t
       tab-bar-auto-width nil
       ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program  (or (and (getenv "WSL_DISTRO_NAME")
                                            "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
@@ -72,7 +73,7 @@
 (setq select-active-regions nil
       select-enable-clipboard t
       select-enable-primary nil)
-
+(set-display-table-slot standard-display-table 'truncation ?»)
 ;;;; NOTE https://github.com/tarsius/hl-todo/blob/f1fef158f99a70746926ef52c59f4863a29b7ed7/hl-todo.el#L105C1-L121C28
 (setopt todowords-words '(("HOLD"   . "#d0bf8f")
                           ("TODO"   . "#229993")
@@ -191,13 +192,28 @@
 
 
 (add-to-list 'display-buffer-alist
-             '((or (major-mode . pdf-outline-buffer-mode)
-                   (major-mode . help-mode))
+             '((major-mode . pdf-outline-buffer-mode)
                (display-buffer-reuse-window
                 display-buffer-in-side-window)
                (reusable-frames . visible)
                (side . right)
                (window-width . 0.25)))
 
+(add-to-list 'display-buffer-alist
+             '((major-mode . help-mode)
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (reusable-frames . visible)
+               (side . bottom)
+               (window-height . 0.25)))
 
+
+(defun my/project-try-local (dir)
+  "Check if DIR contains a .project file."
+  (let ((root (locate-dominating-file dir ".project")))
+    (and root (cons 'transient root))))
+
+(add-hook 'project-find-functions #'my/project-try-local)
+(setq project-find-functions
+      (cons #'my/project-try-local project-find-functions))
 (provide 'init-base)
