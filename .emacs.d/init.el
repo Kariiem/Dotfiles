@@ -43,11 +43,7 @@
               (report-time-since-load " [after-init]")))
           t)
 
-
-(when (and (display-graphic-p) (getenv "WSL_DISTRO_NAME"))
-  (set-frame-parameter nil 'fullscreen 'maximized))
-
-(defun toggle-decorations ()
+(defun toggle-frame-decorations ()
   (interactive)
   (set-frame-parameter nil 'undecorated (not (frame-parameter nil 'undecorated))))
 
@@ -92,24 +88,37 @@
 (defun black-emacs ()
   (interactive)
   (set-face-attribute 'default nil
-                      :foreground "#f8f8f2"
+                      :foreground "#afafa8"
                       :background "#181818"))
 
-;; (dark-emacs)
+(defun linen-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#1a1a18"
+                      :background "#faf0e6"))
 
-;; Adjust garbage collection thresholds during startup, and thereafter
-(let ((normal-gc-cons-threshold (* 128 1024 1024)) ;; 128 mb
-      (init-gc-cons-threshold most-positive-fixnum))
-  (setq gc-cons-threshold init-gc-cons-threshold
-        gc-cons-percentage 0.8)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold
-                             gc-cons-percentage 0.1))))
+(defun semi-dark-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#eaeae8"
+                      :background "#4a4a48")
+  (set-face-attribute 'line-number nil
+                      :foreground "#282828")
+  (set-face-attribute 'region nil
+                      :background "#282828")
+  (set-face-attribute 'transient-inactive-argument nil
+                      :foreground "#000000"))
+
+(defun night-emacs ()
+  (interactive)
+  (set-face-attribute 'default nil
+                      :foreground "#a8987f"
+                      :background "#000000")
+  (set-face-attribute 'hl-line nil
+                      :background "#4a4a48"))
 
 ;; Bootstrap config
-(let ((dirs '("lisp" "minor-modes" "site")))
-  (dolist (d dirs)
-    (add-to-list 'load-path (expand-file-name d user-emacs-directory))))
+(push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
@@ -134,21 +143,10 @@
 
 (advice-add 'en/disable-command :around #'en/disable-commands-in-separate-file)
 
-(defun generate&load-directory-autoloads (dir &optional autoload-file-name force)
-  (let ((filepath (expand-file-name autoload-file-name dir))
-        (m))
-    (if (or (not (file-exists-p filepath)) force)
-        (progn (loaddefs-generate dir filepath)
-               (setq m `("`%s' autoload-file generated from `%s'"
-                                ,filepath ,dir)))
-      (setq m `("`%s' autoload-file already exists" ,filepath)))
-    (load filepath nil t)
-    (apply #'message m)))
-
-(generate&load-directory-autoloads (expand-file-name "minor-modes"
-                                                     user-emacs-directory)
-                                   "autoload-minor-modes.el" t)
-
+(let ((gen-autoload-defs-dirs `(,(expand-file-name "minor-modes" user-emacs-directory)
+                                ,(expand-file-name "site" user-emacs-directory))))
+  (loaddefs-generate gen-autoload-defs-dirs (expand-file-name "lisp/local-loaddefs.el" user-emacs-directory))
+  (load (expand-file-name "lisp/local-loaddefs.el" user-emacs-directory)))
 
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
@@ -218,7 +216,7 @@
 (timed-require 'init-lean)
 (timed-require 'init-prolog)
 ;;;; Build tools
-(timed-require 'init-build)
+;; (timed-require 'init-build)
 (timed-require 'init-tex)
 ;;;; Database
 (timed-require 'init-postgres)
