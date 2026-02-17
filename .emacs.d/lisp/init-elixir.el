@@ -2,15 +2,16 @@
 
 (install-pkgs elixir-mode
               inf-elixir
-              mix)
+              mix
+              exunit)
 
-;; Autoload inf-elixir commands
-(autoload 'inf-elixir "inf-elixir" nil t)
-(autoload 'inf-elixir-project "inf-elixir" nil t)
-(autoload 'inf-elixir-send-line "inf-elixir" nil t)
-(autoload 'inf-elixir-send-region "inf-elixir" nil t)
-(autoload 'inf-elixir-send-buffer "inf-elixir" nil t)
-(autoload 'inf-elixir-reload-module "inf-elixir" nil t)
+;; ;; Autoload inf-elixir commands
+;; (autoload 'inf-elixir "inf-elixir" nil t)
+;; (autoload 'inf-elixir-project "inf-elixir" nil t)
+;; (autoload 'inf-elixir-send-line "inf-elixir" nil t)
+;; (autoload 'inf-elixir-send-region "inf-elixir" nil t)
+;; (autoload 'inf-elixir-send-buffer "inf-elixir" nil t)
+;; (autoload 'inf-elixir-reload-module "inf-elixir" nil t)
 
 (defun elixir/config-pretty-symbols()
   (push '(">=" . ?\u2265) prettify-symbols-alist)

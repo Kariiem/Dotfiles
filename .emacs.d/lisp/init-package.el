@@ -2,8 +2,11 @@
 
 (require 'package)
 
+
+
 (defun install-package (package)
-  (unless (package-installed-p package)
+  (if (package-installed-p package)
+      (push package package-selected-packages)
     (package-install package)))
 
 (defun maybe-install-package (package)
@@ -15,12 +18,12 @@
   `(let ((pkgs (cons ',one ',pkgs)))
      (mapc #'maybe-install-package pkgs)))
 
-(setq package-enable-at-startup nil
-      package-install-upgrade-built-in t
-      package-native-compile t
-      load-prefer-newer t)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-install-upgrade-built-in t
+      package-native-compile t
+      load-prefer-newer t)
+;; (package-initialize)
+(package-activate-all)
 
-(package-initialize)
 (provide 'init-package)

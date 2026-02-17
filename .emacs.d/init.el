@@ -43,16 +43,16 @@
               (report-time-since-load " [after-init]")))
           t)
 
+(add-hook 'emacs-startup-hook (lambda () (require 'init-tabbar)))
+
 (defun toggle-frame-decorations ()
   (interactive)
   (set-frame-parameter nil 'undecorated (not (frame-parameter nil 'undecorated))))
 
-(fringe-mode 0)
-
-(add-hook 'whitespace-mode-hook
-          (lambda () (set-face-attribute 'whitespace-space nil
-                                         :foreground "LavenderBlush4"
-                                         :background nil)))
+(with-eval-after-load 'whitespace
+  (set-face-attribute 'whitespace-space nil
+                      :foreground "LavenderBlush4"
+                      :background 'unspecified))
 
 (defun white-black-emacs ()
   (interactive)
@@ -145,8 +145,10 @@
 
 (let ((gen-autoload-defs-dirs `(,(expand-file-name "minor-modes" user-emacs-directory)
                                 ,(expand-file-name "site" user-emacs-directory))))
-  (loaddefs-generate gen-autoload-defs-dirs (expand-file-name "lisp/local-loaddefs.el" user-emacs-directory))
-  (load (expand-file-name "lisp/local-loaddefs.el" user-emacs-directory)))
+  (loaddefs-generate gen-autoload-defs-dirs (expand-file-name "lisp/local-loaddefs.el" user-emacs-directory)))
+
+;;;; local packages autoloads
+(timed-require 'local-loaddefs)
 
 ;;;; Base
 (load (expand-file-name "enable-commands.el" user-emacs-directory) nil t)
@@ -155,6 +157,7 @@
 (timed-require 'init-base)
 (timed-require 'init-theme)
 (timed-require 'init-misc)
+(timed-require 'init-frame)
 (timed-require 'init-window)
 (timed-require 'init-edit)
 (timed-require 'init-dired)
@@ -224,6 +227,9 @@
 (timed-require 'init-rest)
 ;; init.el ends here
 
+
 (install-pkgs pinentry)
 (setq epg-pinentry-mode 'loopback)
 (pinentry-start)
+
+(provide 'init)

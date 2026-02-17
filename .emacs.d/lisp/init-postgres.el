@@ -6,6 +6,4 @@
 (unless (package-installed-p 'pgmacs)
    (package-vc-install "https://github.com/emarsden/pgmacs" nil nil 'pgmacs))
 
-(require 'pgmacs)
-
 (provide 'init-postgres)

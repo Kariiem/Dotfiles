@@ -8,9 +8,7 @@
   (defun uncoloured-emacs ()
     (interactive)
     (face-spec-set 'default nil 'reset)
-    (set-face-attribute 'default nil :foreground nil :background nil)
-    (set-face-attribute 'default t :foreground nil :background nil)
-    (set-face-attribute 'default (selected-frame) :foreground nil :background nil)
+    (set-face-attribute 'default nil :foreground 'unspecified :background 'unspecified)
     (mapc #'disable-theme custom-enabled-themes))
 
   (xterm-mouse-mode)
@@ -20,6 +18,7 @@
         xterm-window-title-flag t))
 
 (setq ring-bell-function 'ignore
+      initial-scratch-message nil
       visible-bell nil
       inhibit-splash-screen t
       make-backup-files nil
@@ -27,6 +26,8 @@
       backup-by-copying-when-linked t
       scroll-conservatively 101
       frame-inhibit-implied-resize t
+      help-window-select t
+      help-window-keep-selected t
       text-scale-mode-step (expt 2 (/ 1.0 4.0))
       mode-line-position-column-line-format '(" (%l,%C)")
       compilation-scroll-output t
@@ -39,6 +40,7 @@
       isearch-lazy-highlight t
       lazy-count-prefix-format nil
       lazy-count-suffix-format "[%s of %s]"
+      xref-search-program 'ripgrep
       ibuffer-expert t
       tags-case-fold-search nil
       tags-revert-without-query t
@@ -92,7 +94,7 @@
 
 (setq-default create-lockfiles nil
               fill-column 80
-              tab-width 8
+              tab-width 4
               display-fill-column-indicator-character #x2551
               indent-tabs-mode nil
               case-fold-search nil)
@@ -117,10 +119,20 @@
                     (advice-remove #'vertico--metadata-get 'recentf-fix-category))))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(set-face-attribute 'default nil :font my-font)
+
+(set-face-attribute 'default nil
+                    :foreground (frame-parameter nil 'foreground-color)
+                    :background (frame-parameter nil 'background-color)
+                    :font my-font)
+
+(set-face-attribute 'mode-line nil
+                    :box 'unspecified)
+
+(set-face-attribute 'line-number-current-line nil
+                    :foreground "#ffffff")
+
 (set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
-;;(set-frame-font my-font nil t)
-(fringe-mode (cons 8 0))
+
 (defun update-fringe-face ()
   (set-face-attribute 'fringe nil
                       :background (face-attribute 'default :background)))
@@ -130,10 +142,6 @@
               (when (eq face 'default)
                 (update-fringe-face))))
 
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 
 (delete-selection-mode 1)
 (global-auto-revert-mode 1)
@@ -152,8 +160,20 @@
 ;; (global-display-fill-column-indicator-mode 1)
 (global-hl-line-mode 1)
 
-(global-nomouse-mode -1)
-(global-todowords-mode 1)
+
+(face-spec-set 'hl-line
+               '((((class color) (min-colors 88) (background light))
+                  :background "darkseagreen2" :weight extra-bold :extend t)
+                 (((class color) (min-colors 88) (background dark))
+                  :background "#58836b" :weight extra-bold :extend t)
+                 (t :background "#344336" :weight extra-bold :extend t))
+               'face-defface-spec)
+
+;; (global-nomouse-mode -1)
+;; (global-todowords-mode 1)
+
+(repeat-mode 1)
+(auth-source-pass-enable)
 
 (with-eval-after-load 'info
   (add-to-list 'Info-directory-list
@@ -200,6 +220,8 @@
                                        (kill-new search-string)
                                        (message "Copied: %s" search-string))))
 
+(define-key search-map "s" 'isearch-forward-symbol)
+
 (defvar isearch-skip-comments nil)
 
 (isearch-define-mode-toggle skip-comments ";" nil
@@ -242,12 +264,39 @@
                (side . bottom)
                (slot . 0)
                (window-height . 0.25)))
+;; make frame stuff
+(defun make-frame-on-monitor-by-geometry (monitor &optional display parameters)
+  "Make a fullscreen frame on monitor MONITOR, which unline `make-frame-on-monitor' prompts for monitors by geometry, instead of name.
+The optional argument DISPLAY can be a display name, and the optional
+argument PARAMETERS specifies additional frame parameters."
+  (interactive
+   (list
+    (read (let* ((default (format "%S" (cdr (assq 'geometry (frame-monitor-attributes))))))
+            (completing-read
+             (format-prompt "Make frame on monitor" default)
+             (or (delq nil (mapcar (lambda (a)
+                                     (format "%S" (cdr (assq 'geometry a))))
+                                   (display-monitor-attributes-list)))
+                 '(""))
+             nil nil nil nil default)))))
+  (let* ((monitor-workarea
+          (catch 'done
+            (dolist (a (display-monitor-attributes-list display))
+              (when (equal (cdr (assq 'geometry a)) monitor)
+                (throw 'done (cdr (assq 'workarea a)))))))
+         (geometry-parameters
+          (when monitor-workarea
+            `((top . ,(nth 1 monitor-workarea))
+              (left . ,(nth 0 monitor-workarea))
+              (fullscreen . maximized)))))
+    (make-frame (append geometry-parameters parameters))))
 
 ;; the following ensures that after quitting transient window, the side window is not reused
 (defun my-reset-bottom-side-window ()
   "Reset bottom side window after transient exits."
   (when-let* ((bottom-win (window-with-parameter 'window-side 'bottom))
-              (buffer (window-buffer bottom-win)))
+              (buffer (window-buffer bottom-win))
+              (help   (get-buffer "*Help"))) ;; deleting the transient window when there is no help buffer causes issues with child transient windows
     (delete-window bottom-win)
     (display-buffer buffer)))
 (add-hook 'transient-exit-hook #'my-reset-bottom-side-window)
@@ -258,6 +307,18 @@
     (and root (cons 'transient root))))
 
 (add-hook 'project-find-functions #'my/project-try-local)
-(setq project-find-functions
-      (cons #'my/project-try-local project-find-functions))
+
+
+(defun occur-symbol-at-point ()
+  "Display an occur buffer for the symbol at EVENT."
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol t)))
+    (occur (concat "\\_<" (regexp-quote symbol) "\\_>"))))
+
+(defun temp-buffer (&optional name)
+  (interactive)
+  (let* ((name (or name "*temp*"))
+         (buffer (get-buffer-create name)))
+    (switch-to-buffer buffer)))
+
 (provide 'init-base)

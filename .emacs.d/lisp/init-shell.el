@@ -1,11 +1,11 @@
 ;; -*- lexical-binding: t -*-
 
-(install-pkgs mistty)
+(install-pkgs mistty
+              vterm)
 
 ;; Force eshell to show all completions
 (setq eshell-cmpl-cycle-completions nil)
 (setq pcomplete-cycle-completions nil)
-
 
 ;; Use completing-read (minibuffer) for eshell completion
 ;; (add-hook 'shell-mode-hook
@@ -22,16 +22,26 @@
 ;;             (delete-region start end)
 ;;             (insert completion)))))
 
+
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (and global-hl-line-mode (hl-line-mode 'toggle))
+            (display-line-numbers-mode)))
+
 (with-eval-after-load 'mistty
   (defun mistty-hard-clear (n)
     "Clear the MisTTY buffer until the end of the last output.
-
 With an argument, clear from the end of the last Nth output."
     (interactive "p")
     (let ((range (save-excursion (mistty-previous-output 0))))
       (mistty-truncate (min mistty-sync-marker (cdr range)))))
+    (define-key mistty-mode-map (kbd "C-c M-o") 'mistty-hard-clear))
 
-  (define-key mistty-mode-map (kbd "C-c M-o") 'mistty-hard-clear))
+(add-hook 'mistty-mode-hook
+           ;; that 'toggle is needed, other negative args can't undo the global mode
+          (lambda ()
+            (and global-hl-line-mode (hl-line-mode 'toggle))
+            (display-line-numbers-mode)))
 
 (define-key project-prefix-map "s" 'mistty-in-project)
 

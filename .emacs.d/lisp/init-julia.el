@@ -1,8 +1,7 @@
 ;; -*- lexical-binding: t -*-
 (install-pkgs julia-mode
               julia-repl
-              julia-snail
-              vterm)
+              julia-snail)
 
 (add-hook 'julia-mode-hook #'julia-snail-mode)
 (with-eval-after-load 'julia-snail

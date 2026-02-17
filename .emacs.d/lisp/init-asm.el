@@ -3,9 +3,9 @@
 (install-pkgs x86-lookup
               nasm-mode)
 
-(require 'fasm-mode)
-(setq fasm-basic-offset 4
-      x86-lookup-pdf "~/probe/asm/x86_64.pdf")
+(with-eval-after-load 'fasm-mode
+  (setq fasm-basic-offset 4
+        x86-lookup-pdf "~/probe/asm/x86_64.pdf"))
 
 (defun imenu-setup-fasm-manual ()
   (interactive)

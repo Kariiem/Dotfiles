@@ -2,7 +2,6 @@
 
 (install-pkgs pdf-tools
               saveplace-pdf-view)
-(pdf-loader-install)
 
 (setq-default pdf-view-display-size 'fit-page)
 ;; Enable hiDPI support, but at the cost of memory! See politza/pdf-tools#51
@@ -28,7 +27,9 @@ See `scroll-down-command' for details."
 
 (with-eval-after-load 'pdf-view
   (add-hook 'pdf-view-mode-hook (lambda ()
-                                  (display-line-numbers-mode -1)))
+                                  (and global-hl-line-mode (hl-line-mode 'toggle))
+                                  (display-line-numbers-mode -1)
+                                  (pdf-view-roll-minor-mode 1)))
 
   (global-set-key [remap scroll-other-window] 'pdf/scroll-other-window-up)
   (global-set-key  [remap scroll-other-window-down] 'pdf/scroll-other-window-down)

@@ -9,8 +9,8 @@
 
 
 (with-eval-after-load 'haskell
-  (require 'ghcid)
-  (require 'hindent)
+  ;; (require 'ghcid)
+  ;; (require 'hindent)
 
   (and (listp 'which-func-modes) (add-to-list 'which-func-modes 'haskell-mode))
   (defun haskell-company-setup ()

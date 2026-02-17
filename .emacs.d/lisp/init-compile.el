@@ -14,7 +14,8 @@
   (when (eq major-mode 'compilation-mode)
     (setq-local compilation-directory
                 (read-directory-name "Compile directory: "
-                                     compilation-directory))
+                                     compilation-directory)
+                default-directory compilation-directory)
     (recompile-with-edit)))
 
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)

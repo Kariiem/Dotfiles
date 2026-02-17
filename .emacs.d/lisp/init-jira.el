@@ -4,7 +4,8 @@
       jira-token-is-personal-access-token nil
       jira-debug nil
       jira-api-version 3
-      jira-users-max-results 10000)
+      jira-users-max-results 10000
+      jira-comments-display-recent-first nil)
 
 (add-to-list 'display-buffer-alist
              '("\\*jira-issues\\*"

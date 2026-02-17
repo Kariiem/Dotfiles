@@ -26,7 +26,6 @@
     (hledger-backward-entry)
     (hledger-pulse-momentary-current-entry)))
 
-(add-hook 'hledger-view-mode-hook #'hl-line-mode)
 (add-hook 'hledger-mode-hook
             (lambda ()
               (make-local-variable 'company-backends)
