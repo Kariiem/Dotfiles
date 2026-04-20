@@ -1,45 +1,32 @@
 ;;; init-tabbar.el --- Modern browser-like tab-bar styling -*- lexical-binding: t; -*-
 
-;; written by claude code
-
-;;; Commentary:
-;; Modern, clean tab-bar faces that look like browser tabs
-;; - No boxes/borders
-;; - Seamless integration with background
-;; - Rounded/slanted edges using Unicode characters
-;; - Active tab blends with editor background
-
-;;; Code:
-
-;; === FACE CUSTOMIZATION ===
 
 ;; Base tab-bar (the bar itself)
-(set-face-attribute 'tab-bar nil
-                    :background "#1e2024"    ; Match your background
-                    :foreground "#f8f8f2"    ; Match your foreground
-                    :box nil                 ; NO BOX!
-                    :inherit 'unspecified)
+(face-spec-set 'tab-bar
+               '((((class color) (min-colors 88) (background light))
+                   :background "#5e5074")
+                 (((class color) (min-colors 88) (background dark))
+                   :background "#1e2024")
+                 (t :background "#1e2024"))
+               'face-defface-spec)
 
 ;; Active/selected tab - blends with editor background
-(set-face-attribute 'tab-bar-tab nil
-                    :background "#292C31"    ; Same as editor background
-                    :foreground "#f8f8f2"    ; Active text color
-                    :weight 'bold            ; Make it stand out
-                    :box       nil ;; '(:line-width (1 . -1) :color "white")
-                    :underline nil ;; '(:color "white" :style line :position t)
-                    :overline "white"
-                    :inherit 'unspecified)
+(face-spec-set 'tab-bar-tab
+               '((((class color) (min-colors 88) (background light))
+                  :foreground "white" :background "#5e7074" :overline "white" :weight bold)
+                 (((class color) (min-colors 88) (background dark))
+                  :foreground "#f8f8f2" :background "#292C31" :overline "white" :weight bold)
+                 (t :foreground "#f8f8f2" :background "#1e2024" :weight bold))
+               'face-defface-spec)
 
 ;; Inactive tabs - slightly dimmed
-(set-face-attribute 'tab-bar-tab-inactive nil
-                    :background "#1e2024"    ; Darker than bar
-                    :foreground "#7a7f8a"    ; Dimmed text
-                    :weight 'normal
-                    :box nil                 ; NO BOX!
-                    :underline nil
-                    :overline nil
-                    :inherit 'unspecified)
-
+(face-spec-set 'tab-bar-tab-inactive
+               '((((class color) (min-colors 88) (background light))
+                  :foreground "white" :inherit tab-bar)
+                 (((class color) (min-colors 88) (background dark))
+                  :foreground "#7a7f8a" :inherit tab-bar)
+                 (t :foreground "#f8f8f2" :inherit tab-bar))
+               'face-defface-spec)
 
 (defun my/tab-bar-format (tab i)
   "Format TAB with Chrome-like appearance."
@@ -52,8 +39,6 @@
      (propertize (format "%s" tab-name) 'face  face)
      (propertize " " 'face face))))
 
-
-;; === TAB-BAR DYNAMIC NAMING ===
 
 (defvar tab-name-width 16)
 
@@ -84,10 +69,10 @@ If STR is longer than MAX-WIDTH, truncate with ELLIPSIS."
                    trimmed)))
     (tab-bar-center-string name tab-name-width ?\s "")))
 
-(defun tab-bar-rename-current-tab-prompt ()
+(defun tab-bar-rename-current-tab-prompt (&optional name)
   "Rename the current tab interactively."
   (interactive)
-  (let ((new-name (tab-bar-prompt-name-function)))
+  (let ((new-name (or name (tab-bar-prompt-name-function))))
     (tab-bar-rename-tab new-name)))
 
 (defun tab-bar--rename-initial-tab ()
@@ -95,7 +80,7 @@ If STR is longer than MAX-WIDTH, truncate with ELLIPSIS."
   (when (and tab-bar-mode
              (= (length (tab-bar-tabs)) 1))
     (unless (alist-get 'explicit-name (tab-bar--current-tab))
-      (tab-bar-rename-current-tab-prompt))
+      (tab-bar-rename-current-tab-prompt "default"))
     (tab-bar--update-tab-bar-lines)))
 
 (defun tab-bar--mark-tab-explicit-name (tab)
@@ -104,9 +89,8 @@ If STR is longer than MAX-WIDTH, truncate with ELLIPSIS."
 
 (defun tab-bar--reapply-string-fmt (tab)
   "Mark TAB as having an explicit name to prevent auto-renaming."
-  (let ((name (alist-get 'name (cdr tab))))
-    (setf name (tab-bar-center-string name tab-name-width ?\s ""))
-    (force-mode-line-update)))
+  (setf (alist-get 'name (cdr tab)) (tab-bar-center-string (alist-get 'name (cdr tab)) tab-name-width ?\s ""))
+  (force-mode-line-update))
 
 ;; new tab buffer
 (defun my-tab-bar-new-tab-buffer ()
@@ -128,8 +112,6 @@ If STR is longer than MAX-WIDTH, truncate with ELLIPSIS."
 
 (add-hook 'tab-bar-mode-hook #'tab-bar--rename-initial-tab)
 
-;; === KEYBINDINGS ===
-
 (defvar-keymap tab-bar-repeat-map
   "k" #'tab-bar-close-tab
   "n" #'tab-bar-switch-to-next-tab
@@ -145,14 +127,5 @@ If STR is longer than MAX-WIDTH, truncate with ELLIPSIS."
 (global-set-key (kbd "C-c n") #'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-c p") #'tab-bar-switch-to-prev-tab)
 (global-set-key (kbd "C-c r") #'tab-bar-rename-tab)
-
-;; Quick switch with number
-(dotimes (i 9)
-  (global-set-key (kbd (format "M-%d" (1+ i)))
-                  `(lambda () (interactive) (tab-bar-select-tab ,(1+ i)))))
-
-
-;; Enable tab-bar mode
-;; (tab-bar-mode 1)
 
 (provide 'init-tabbar)

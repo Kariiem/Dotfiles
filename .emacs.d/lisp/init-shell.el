@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
 (install-pkgs mistty
-              vterm)
+              ghostel)
 
 ;; Force eshell to show all completions
 (setq eshell-cmpl-cycle-completions nil)
@@ -22,11 +22,9 @@
 ;;             (delete-region start end)
 ;;             (insert completion)))))
 
-
-(add-hook 'vterm-mode-hook
-          (lambda ()
-            (and global-hl-line-mode (hl-line-mode 'toggle))
-            (display-line-numbers-mode)))
+(defun term/disable-hl-and-line-numbers ()
+  (and global-hl-line-mode (hl-line-mode 'toggle))  ;; that 'toggle is needed, other negative args can't undo the global mode
+  (display-line-numbers-mode -1))
 
 (with-eval-after-load 'mistty
   (defun mistty-hard-clear (n)
@@ -37,11 +35,8 @@ With an argument, clear from the end of the last Nth output."
       (mistty-truncate (min mistty-sync-marker (cdr range)))))
     (define-key mistty-mode-map (kbd "C-c M-o") 'mistty-hard-clear))
 
-(add-hook 'mistty-mode-hook
-           ;; that 'toggle is needed, other negative args can't undo the global mode
-          (lambda ()
-            (and global-hl-line-mode (hl-line-mode 'toggle))
-            (display-line-numbers-mode)))
+(dolist (hook '(ghostel-mode-hook mistty-mode-hook shell-mode-hook term-mode-hook))
+  (add-hook hook #'term/disable-hl-and-line-numbers))
 
 (define-key project-prefix-map "s" 'mistty-in-project)
 

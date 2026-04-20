@@ -34,7 +34,7 @@
       recentf-max-menu-items 1000
       recentf-max-saved-items 1000
       recentf-auto-cleanup 'never
-      display-line-numbers-type 'relative
+      display-line-numbers-type t
       imenu-max-item-length nil
       isearch-lazy-count t
       isearch-lazy-highlight t
@@ -75,7 +75,13 @@
 (setq select-active-regions nil
       select-enable-clipboard t
       select-enable-primary nil)
-(set-display-table-slot standard-display-table 'truncation ?»)
+
+
+(when (boundp 'standard-display-table)
+  (unless standard-display-table
+    (setq standard-display-table (make-display-table)))
+  (set-display-table-slot standard-display-table 'truncation ?»))
+
 ;;;; NOTE https://github.com/tarsius/hl-todo/blob/f1fef158f99a70746926ef52c59f4863a29b7ed7/hl-todo.el#L105C1-L121C28
 (setopt todowords-words '(("HOLD"   . "#d0bf8f")
                           ("TODO"   . "#229993")
@@ -120,30 +126,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 
-(set-face-attribute 'default nil
-                    :foreground (frame-parameter nil 'foreground-color)
-                    :background (frame-parameter nil 'background-color)
-                    :font my-font)
 
-(set-face-attribute 'mode-line nil
-                    :box 'unspecified)
-
-(set-face-attribute 'line-number-current-line nil
-                    :foreground "#ffffff")
-
-(set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
-
-(defun update-fringe-face ()
-  (set-face-attribute 'fringe nil
-                      :background (face-attribute 'default :background)))
-(update-fringe-face)
-(advice-add 'set-face-attribute :after
-            (lambda (face frame &rest args)
-              (when (eq face 'default)
-                (update-fringe-face))))
-
-
-(delete-selection-mode 1)
 (global-auto-revert-mode 1)
 
 (pixel-scroll-precision-mode 1)
@@ -151,6 +134,7 @@
 (savehist-mode 1)
 (etags-regen-mode)
 ;;(recentf-mode 1)
+(delete-selection-mode 1)
 (column-number-mode 1)
 (whitespace-mode 1)
 (show-paren-mode 1)
@@ -158,16 +142,24 @@
 ;;(desktop-save-mode 1)
 (global-display-line-numbers-mode 1)
 ;; (global-display-fill-column-indicator-mode 1)
-(global-hl-line-mode 1)
-
+;; (global-hl-line-mode 1)
 
 (face-spec-set 'hl-line
                '((((class color) (min-colors 88) (background light))
-                  :background "darkseagreen2" :weight extra-bold :extend t)
+                  :background "#b4eeb4" :weight extra-bold :extend t)
                  (((class color) (min-colors 88) (background dark))
-                  :background "#58836b" :weight extra-bold :extend t)
+                  :background "#58706b" :weight extra-bold :extend t)
                  (t :background "#344336" :weight extra-bold :extend t))
                'face-defface-spec)
+
+(set-face-attribute 'default nil :font my-font)
+
+(set-face-attribute 'mode-line nil :box 'unspecified)
+
+(face-spec-set 'line-number-current-line '((t :inherit (hl-line default))) 'face-defface-spec)
+(face-spec-set 'fringe '((t :inherit default)) 'face-defface-spec)
+
+(set-face-attribute 'fill-column-indicator nil :foreground "dim grey")
 
 ;; (global-nomouse-mode -1)
 ;; (global-todowords-mode 1)
@@ -179,8 +171,8 @@
   (add-to-list 'Info-directory-list
                (expand-file-name "info" user-emacs-directory)))
 
-(with-eval-after-load 'flycheck
-  (flycheck-popup-tip-mode))
+;; (with-eval-after-load 'flycheck
+;;   (flycheck-popup-tip-mode))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
@@ -206,7 +198,7 @@
     ;; Always copy quit-restore parameter in interactive use.
     (let ((quit-restore (window-parameter window-to-split 'quit-restore)))
       (when quit-restore
-	(set-window-parameter new-window 'quit-restore quit-restore)))
+        (set-window-parameter new-window 'quit-restore quit-restore)))
     new-window))
 
 (global-set-key (kbd "C-x 3") #'split-window-1/n)

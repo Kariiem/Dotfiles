@@ -9,7 +9,7 @@
 ;;; Code:
 
 ;; see (elisp) Startup Summary, 7th element
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup t)
 
 ;; see (elisp) Startup Summary, 10th element
 ;; (push '(alpha-background     . 90)        default-frame-alist) ;; see back-alpha-mode
@@ -45,11 +45,11 @@
 (add-hook 'emacs-startup-hook 'gc-restore-after-startup)
 
 ;; https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/refs/heads/main/early-init.el
-(if (and (featurep 'native-compile)
-         (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (setq package-native-compile t)
-  (setq features (delq 'native-compile features)))
+;; (if (and (featurep 'native-compile)
+;;          (fboundp 'native-comp-available-p)
+;;          (native-comp-available-p))
+;;     (setq package-native-compile nil)
+;;   (setq features (delq 'native-compile features)))
 
 (setq jka-compr-verbose nil)
 (setq read-process-output-max (* 2 1024 1024))

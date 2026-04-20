@@ -5,9 +5,8 @@
 
 (setq-default pdf-view-display-size 'fit-page)
 ;; Enable hiDPI support, but at the cost of memory! See politza/pdf-tools#51
-(setq pdf-view-use-scaling t
-      pdf-view-use-imagemagick nil)
 
+(setq pdf-view-resize-factor 1.125)
 
 (defun pdf/scroll-other-window-down (&optional lines)
   "Scroll next window downward LINES lines; or near full screen if no ARG.
