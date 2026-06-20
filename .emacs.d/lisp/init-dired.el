@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+(install-pkgs dired-subtree)
+
+
 (when (getenv "WSL_DISTRO_NAME")
   (require 'ls-lisp)
   (setq ls-lisp-use-insert-directory-program nil))
@@ -19,8 +22,12 @@
 
 (with-eval-after-load 'dired
   (require 'dired-x)
-  (setq dired-omit-files
-        (concat dired-omit-files "\\|\\`[.].+\\'")))
+  (require 'dired-subtree)
+  (setq dired-omit-files (concat dired-omit-files "\\|\\`[.].+\\'")
+        dired-subtree-line-prefix "  \u2502 "
+        dired-subtree-use-backgrounds nil)
+  (keymap-set dired-mode-map "<tab>"      #'dired-subtree-toggle)
+  (keymap-set dired-mode-map "<backtab>"  #'dired-subtree-cycle))
 
 (add-hook 'prog-mode-hook 'set-read-only)
 (add-hook 'dired-mode-hook (lambda ()
