@@ -35,6 +35,8 @@ With an argument, clear from the end of the last Nth output."
       (mistty-truncate (min mistty-sync-marker (cdr range)))))
     (define-key mistty-mode-map (kbd "C-c M-o") 'mistty-hard-clear))
 
+(setq ghostel-max-scrollback (* 64 1024 1024)) ; 64MB
+
 (dolist (hook '(ghostel-mode-hook mistty-mode-hook shell-mode-hook term-mode-hook))
   (add-hook hook #'term/disable-hl-and-line-numbers))
 
