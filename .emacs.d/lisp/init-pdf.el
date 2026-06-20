@@ -43,4 +43,6 @@ See `scroll-down-command' for details."
 
 (add-hook 'pdf-outline-buffer-mode-hook (lambda () (display-line-numbers-mode -1)))
 
+(pdf-tools-install)
+
 (provide 'init-pdf)
