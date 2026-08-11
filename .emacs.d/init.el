@@ -117,6 +117,8 @@
   (set-face-attribute 'hl-line nil
                       :background "#4a4a48"))
 
+(keymap-set global-map "C-x ," #'no-emacs-kill-mode)
+
 ;; Bootstrap config
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
@@ -226,6 +228,9 @@
 ;;;; WebDev
 (timed-require 'init-rest)
 ;; init.el ends here
+
+;; set of minor modes
+(timed-require 'init-core)
 
 
 (install-pkgs pinentry)

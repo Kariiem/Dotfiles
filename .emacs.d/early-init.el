@@ -25,6 +25,9 @@
 (push '(visibility)                       default-frame-alist) ;; to even prevent the split second when the frame is not ready
 (push '(fullscreen           . maximized) default-frame-alist)
 
+;; `disable-theme' resets the default face :background and :foreground attributes unless they are unspecified
+(set-face-attribute 'default nil :foreground "#f8f8f2" :background "#292C31")
+
 (defun show-frame (frame)
   (make-frame-visible frame)
   (remove-hook 'after-make-frame-functions #'show-frame))
