@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (install-pkgs gt)
 
 (with-eval-after-load 'gt

@@ -194,10 +194,14 @@ the file.
 ;;; Generated autoloads from ../minor-modes/hinfo.el
 
 (defvar-keymap hinfo-mode-map "N" #'hinfo-goto-next-section "P" #'hinfo-goto-prev-section "n" #'hinfo-goto-next-state "p" #'hinfo-goto-prev-state "S" #'hinfo-goto-section "T" #'hinfo-goto-nonterminal "t" #'hinfo-goto-terminal "r" #'hinfo-goto-rule "s" #'hinfo-goto-state "g" #'hinfo-revert)
-(autoload 'hinfo-mode "../minor-modes/hinfo" "\
-Major mode for Happy generated info files
+(autoload 'hinfo-mode "../minor-modes/hinfo"
+"Major mode for Happy generated info files
 
-(fn)" t)
+In addition to any hooks its parent mode `prog-mode' might have run,
+this mode runs the hook `hinfo-mode-hook', as the final or penultimate
+step during initialization.
+
+\\{hinfo-mode-map}" t)
 (add-to-list 'auto-mode-alist '("\\.hinfo\\'" . hinfo-mode))
 (register-definition-prefixes "../minor-modes/hinfo" '("hinfo-"))
 

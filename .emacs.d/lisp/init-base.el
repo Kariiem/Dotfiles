@@ -65,12 +65,7 @@
                                       "chromium")
       whitespace-style '(face spaces trailing tabs
                               indentation space-mark tab-mark
-                              missing-newline-at-eof)
-      my-font (font-spec :family "JetBrains Mono"
-                         :size 16
-                         ;;:width 'normal
-                         :weight 'normal
-                         :slant 'normal))
+                              missing-newline-at-eof))
 
 (setq select-active-regions nil
       select-enable-clipboard t
@@ -152,7 +147,11 @@
                  (t :background "#344336" :weight extra-bold :extend t))
                'face-defface-spec)
 
-(set-face-attribute 'default nil :font my-font)
+(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"
+                                                  :size 16
+                                                  ;;:width 'normal
+                                                  :weight 'normal
+                                                  :slant 'normal))
 
 (set-face-attribute 'mode-line nil :box 'unspecified)
 

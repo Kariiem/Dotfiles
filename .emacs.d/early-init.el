@@ -20,7 +20,7 @@
 (push '(undecorated          . t)         default-frame-alist)
 (push '(menu-bar-lines       . 0)         default-frame-alist)
 (push '(tool-bar-lines       . 0)         default-frame-alist)
-(push '(vertical-scroll-bars )            default-frame-alist)
+(push '(vertical-scroll-bars)             default-frame-alist)
 (push '(horizontal-scroll-bars)           default-frame-alist)
 (push '(visibility)                       default-frame-alist) ;; to even prevent the split second when the frame is not ready
 (push '(fullscreen           . maximized) default-frame-alist)

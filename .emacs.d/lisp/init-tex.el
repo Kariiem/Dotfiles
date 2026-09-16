@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (install-pkgs auctex)
 
 (setq TeX-auto-save t

@@ -20,10 +20,11 @@
 (setq Man-notify-method 'pushy
       Man-width 80)
 
-(set-face-attribute 'Info-quoted nil
-                    :foreground "orange"
-                    :slant 'italic
-                    :family "Jetbrains Mono")
+(with-eval-after-load 'info
+  (set-face-attribute 'Info-quoted nil
+                      :foreground "orange"
+                      :slant 'italic
+                      :family "Jetbrains Mono"))
 
 (setq delete-by-moving-to-trash t)
 (provide 'init-misc)
