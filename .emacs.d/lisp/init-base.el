@@ -153,7 +153,7 @@
                                                   :weight 'normal
                                                   :slant 'normal))
 
-(set-face-attribute 'mode-line nil :box 'unspecified)
+(face-spec-set 'mode-line '((t :box unspecified)) 'face-override-spec)
 
 (face-spec-set 'line-number-current-line '((t :inherit (hl-line default))) 'face-defface-spec)
 (face-spec-set 'fringe '((t :inherit default)) 'face-defface-spec)
