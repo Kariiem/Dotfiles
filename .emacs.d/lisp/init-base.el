@@ -71,6 +71,8 @@
       select-enable-clipboard t
       select-enable-primary nil)
 
+(setq buffer-quit-function #'ignore)    ;; to avoid stupid delete-other-windows when pressing Esc
+
 
 (when (boundp 'standard-display-table)
   (unless standard-display-table
@@ -167,8 +169,10 @@
 (auth-source-pass-enable)
 
 (with-eval-after-load 'info
-  (add-to-list 'Info-directory-list
-               (expand-file-name "info" user-emacs-directory)))
+  (if-let* ((user-info-dir (expand-file-name "info" user-emacs-directory))
+            ((file-directory-p user-info-dir)))
+      (add-to-list 'Info-directory-list
+               (expand-file-name "info" user-emacs-directory))))
 
 ;; (with-eval-after-load 'flycheck
 ;;   (flycheck-popup-tip-mode))
